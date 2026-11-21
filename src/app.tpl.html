@@ -1,0 +1,383 @@
+<title>Körperkraft Training</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#0f1715">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: phone-first app shell; top bar, one view at a time, bottom tab bar; player is a full-screen view with a timer ring */
+:root{
+  --bg:#f3f6f5; --surface:#ffffff; --fg:#14201c; --muted:#5a6a65; --line:#d7e0dd;
+  --accent:#0d7a64; --accent-soft:#dcefe9; --rest:#3e5fa8; --rest-soft:#e3e9f7; --warn:#a4520c;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1715; --surface:#17221f; --fg:#e4ece9; --muted:#93a59f; --line:#2a3833;
+  --accent:#45c3a5; --accent-soft:#18352e; --rest:#8fa9ec; --rest-soft:#1c2540; --warn:#f0a35e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1715; --surface:#17221f; --fg:#e4ece9; --muted:#93a59f; --line:#2a3833;
+  --accent:#45c3a5; --accent-soft:#18352e; --rest:#8fa9ec; --rest-soft:#1c2540; --warn:#f0a35e; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 96px}
+h1,h2,h3{font-family:var(--display);letter-spacing:.01em;text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:2.1rem} h2{font-size:1.4rem;margin-top:24px} h3{font-size:1.2rem}
+.muted{color:var(--muted)}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;gap:4px;padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.tabs a{flex:1;max-width:200px;text-align:center;padding:8px;border-radius:8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.9rem}
+.tabs a[aria-current="page"]{color:var(--accent);background:var(--accent-soft)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card .facts{display:flex;flex-wrap:wrap;gap:6px;font-size:.8rem;font-variant-numeric:tabular-nums}
+.pill{padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:.75rem}
+.btn{font:600 .95rem var(--body);padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn.big{padding:14px 22px;font-size:1.05rem}
+.card .btn{align-self:flex-start;margin-top:auto}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{font:500 .82rem var(--body);padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.exlist{margin-top:12px;border-top:1px solid var(--line)}
+.exrow{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.exrow > div{min-width:0}
+.exrow a{color:var(--accent);font-weight:600;font-size:.85rem;white-space:nowrap;text-decoration:none}
+.lvl{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:600;margin-left:6px}
+/* player */
+.player{display:flex;flex-direction:column;gap:14px}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-variant-numeric:tabular-nums;font-size:.85rem;color:var(--muted)}
+.phase{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--accent)}
+.player.is-rest .phase{color:var(--rest)}
+.pname{font-family:var(--display);font-size:2.2rem;line-height:1.05;text-wrap:balance}
+.media{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--line)}
+.media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.media .fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:16px;color:var(--muted)}
+.media .fallback a{color:var(--accent);font-weight:600}
+.cue{font-size:.95rem}
+.ringwrap{display:flex;justify-content:center}
+.ring{position:relative;width:min(220px,60vw);aspect-ratio:1}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .bgc{stroke:var(--line)}
+.ring .fgc{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.player.is-rest .ring .fgc{stroke:var(--rest)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--display);font-size:4rem;line-height:1;font-variant-numeric:tabular-nums}
+.ring .num small{font-family:var(--body);font-size:.85rem;color:var(--muted)}
+.next{font-size:.9rem;color:var(--muted);text-align:center}
+.pctl{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.sound{display:flex;justify-content:center;gap:8px;font-size:.85rem;color:var(--muted);align-items:center}
+.finish{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding-top:24px}
+.finish .stat{font-family:var(--display);font-size:3rem;font-variant-numeric:tabular-nums}
+/* plans */
+.weeks{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.week{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.week.current{border-color:var(--accent)}
+.week summary{cursor:pointer;display:flex;justify-content:space-between;gap:8px;font-weight:600;list-style:none}
+.week summary::-webkit-details-marker{display:none}
+.wk-prog{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:500;font-size:.85rem}
+.sess{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)}
+.sess:first-of-type{margin-top:10px}
+.sess > div{min-width:0}
+.sess.done .sname{text-decoration:line-through;color:var(--muted)}
+.tick{display:inline-flex;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);align-items:center;justify-content:center;font-size:.75rem;flex:none;color:var(--bg)}
+.sess.done .tick{background:var(--accent);border-color:var(--accent)}
+.sess .left{display:flex;gap:10px;align-items:center}
+/* stats */
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+@media (min-width:560px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi b{display:block;font-family:var(--display);font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:.8rem;color:var(--muted)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px}
+.bars{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;align-items:end;height:140px;margin-top:10px}
+.bar{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar i{display:block;width:100%;background:var(--accent);border-radius:4px 4px 0 0;min-height:2px}
+.bar.now i{background:var(--rest)}
+.zrow{display:grid;grid-template-columns:9.5em 1fr 3.5em;gap:8px;align-items:center;font-size:.85rem;padding:4px 0;font-variant-numeric:tabular-nums}
+.zrow .zt{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.zrow .zt i{display:block;height:100%;background:var(--accent)}
+.hist{margin-top:8px}
+.hist div{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line);font-size:.88rem;font-variant-numeric:tabular-nums}
+.empty{padding:24px 0;color:var(--muted)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.ring .fgc{transition:none}}
+</style>
+
+<div class="wrap" id="view"></div>
+<nav class="tabs" id="tabs">
+  <a href="#workouts" data-v="workouts">Workouts</a>
+  <a href="#plan" data-v="plan">Plan</a>
+  <a href="#uebungen" data-v="uebungen">Übungen</a>
+  <a href="#fortschritt" data-v="fortschritt">Fortschritt</a>
+</nav>
+
+<script>
+const CATALOG = __CATALOG__;
+const WORKOUTS = __WORKOUTS__;
+const EX = Object.fromEntries(CATALOG.map(e=>[e.id,e]));
+const ZONES = ["Oberkörper","Rumpf","Beine & Po","Ausdauer ohne Sprung","Mobilität"];
+const CAN_EMBED = !/claude|anthropic/i.test(location.hostname);
+const view = document.getElementById("view");
+const store = { get(k,d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(_){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){} } };
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = s => { s=Math.max(0,Math.round(s)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); };
+
+/* ---------- plans ---------- */
+// Each week lists sessions; scale raises reps and work time, extra adds rounds.
+function mkPlan(id, name, desc, weeks, pattern, prog){
+  const W=[];
+  for(let w=1; w<=weeks; w++){
+    const {scale, extra} = prog(w);
+    W.push({week:w, scale, extra, sessions: pattern(w).map(x=>({workout:x}))});
+  }
+  return {id, name, desc, weeks:W};
+}
+const PLANS = [
+  mkPlan("einsteiger-8","Einsteiger","8 Wochen, 3 Einheiten pro Woche. Langsam aufbauen, Technik lernen.",8,
+    w=> w<=2 ? ["einsteiger","mobilitaet","einsteiger"] : w<=4 ? ["einsteiger","rumpf","beine-po"] : w<=6 ? ["oberkoerper","rumpf","beine-po"] : ["einsteiger","oberkoerper","beine-po"],
+    w=>({scale: 1 + 0.1*Math.floor((w-1)/2), extra: w>=7?1:0})),
+  mkPlan("kraft-8","Kraft","8 Wochen, 4 Einheiten pro Woche. Mehr Wiederholungen und Runden von Woche zu Woche.",8,
+    w=> ["oberkoerper","beine-po","rumpf","mobilitaet"],
+    w=>({scale: 1 + 0.08*(w-1), extra: w>=5?1:0})),
+  mkPlan("ausdauer-6","Fit und Ausdauer","6 Wochen, 4 Einheiten pro Woche. Puls hoch, ganz ohne Sprünge.",6,
+    w=> ["ausdauer","rumpf","ausdauer","beine-po"],
+    w=>({scale: 1 + 0.1*Math.floor((w-1)/2), extra: w>=5?1:0})),
+];
+function scaled(w, scale=1, extra=0){
+  const c = JSON.parse(JSON.stringify(w));
+  c.items.forEach(i=>{ if(i.reps) i.reps=Math.round(i.reps*scale); if(i.time) i.time=Math.round(i.time*scale/5)*5; });
+  c.rounds += extra;
+  return c;
+}
+let planState = store.get("plan", null); // {id, started, done:{"w-s":iso}}
+
+/* ---------- speech + beeps ---------- */
+const settings = store.get("settings",{voice:true,beep:true});
+let deVoice=null;
+function pickVoice(){ const v=(window.speechSynthesis?.getVoices?.()||[]); deVoice = v.find(x=>/^de(-|_)/i.test(x.lang)) || null; }
+if (window.speechSynthesis){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function say(text){
+  if(!settings.voice || !window.speechSynthesis) return;
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang="de-DE"; if(deVoice) u.voice=deVoice; u.rate=1.02; speechSynthesis.speak(u); }catch(_){}
+}
+let actx=null;
+function beep(freq=880, dur=.12){
+  if(!settings.beep) return;
+  try{ actx = actx || new (window.AudioContext||window.webkitAudioContext)(); const o=actx.createOscillator(), g=actx.createGain();
+    o.frequency.value=freq; o.connect(g); g.connect(actx.destination); g.gain.setValueAtTime(.18,actx.currentTime); g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+dur);
+    o.start(); o.stop(actx.currentTime+dur); }catch(_){}
+}
+
+/* ---------- workout timeline ---------- */
+function workoutSeconds(w){
+  let t=0; w.items.forEach(i=>t += (i.time || i.reps*3) + w.rest);
+  return t*w.rounds + w.roundRest*(w.rounds-1);
+}
+function buildSteps(w){
+  const s=[{kind:"ready", dur:10, item:w.items[0], round:1}];
+  for(let r=1;r<=w.rounds;r++){
+    w.items.forEach((it,i)=>{
+      s.push({kind:"work", dur: it.time||null, reps: it.reps||null, item:it, round:r});
+      const lastInRound = i===w.items.length-1, lastAll = lastInRound && r===w.rounds;
+      if(lastAll) return;
+      const rest = lastInRound ? w.roundRest : w.rest;
+      const nextItem = lastInRound ? w.items[0] : w.items[i+1];
+      if(rest>0) s.push({kind:"rest", dur:rest, item:nextItem, round: lastInRound? r+1 : r, roundBreak:lastInRound});
+    });
+  }
+  return s;
+}
+
+/* ---------- views ---------- */
+let exFilter="Alle";
+function renderWorkouts(){
+  view.innerHTML = `<h1>Workouts</h1><p class="muted">Alle Übungen ohne Sprünge. Ton an, Handy hinlegen, los geht's.</p><div class="cards">${
+    WORKOUTS.map(w=>`<div class="card"><h3>${esc(w.name)}</h3><div class="muted">${esc(w.desc)}</div>
+      <div class="facts"><span class="pill">ca. ${Math.round(workoutSeconds(w)/60)} Min</span><span class="pill">${w.items.length} Übungen</span><span class="pill">${w.rounds} ${w.rounds>1?"Runden":"Runde"}</span></div>
+      <div class="muted" style="font-size:.85rem">${w.items.map(i=>esc(EX[i.ex].name)).join(" · ")}</div>
+      <button class="btn primary" data-start="${w.id}" type="button">Starten</button></div>`).join("")
+  }</div>`;
+  view.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>startWorkout(b.dataset.start));
+}
+function renderExercises(){
+  const items = CATALOG.filter(e=>exFilter==="Alle"||e.zone===exFilter);
+  view.innerHTML = `<h1>Übungen</h1><p class="muted">${CATALOG.length} Übungen ohne Sprünge.</p>
+    <div class="chips">${["Alle",...ZONES].map(z=>`<button type="button" class="chip" aria-pressed="${z===exFilter}" data-z="${esc(z)}">${esc(z)}</button>`).join("")}</div>
+    <div class="exlist">${items.map(e=>`<div class="exrow"><div><strong>${esc(e.name)}</strong><span class="lvl">${esc(e.level)}</span>
+      <div class="muted" style="font-size:.85rem">${esc(e.muscles)}</div><div style="font-size:.9rem">${esc(e.cue)}</div></div>
+      <a href="${esc(e.video.url)}" target="_blank" rel="noopener">Video ↗</a></div>`).join("")}</div>`;
+  view.querySelectorAll("[data-z]").forEach(b=>b.onclick=()=>{exFilter=b.dataset.z; renderExercises();});
+}
+
+/* ---------- player ---------- */
+let P=null, wakeLock=null;
+function startWorkout(id, opts={}){
+  const base = WORKOUTS.find(x=>x.id===id); if(!base) return;
+  const w = scaled(base, opts.scale||1, opts.extra||0);
+  beep(1,.001); // unlock audio on this tap
+  P = {w, steps:buildSteps(w), i:0, left:0, paused:false, last:0, started:Date.now(), workSecs:0, zones:{}, planKey:opts.planKey||null, timer:null, spoken:{}};
+  try{ navigator.wakeLock?.request("screen").then(l=>wakeLock=l).catch(()=>{}); }catch(_){}
+  document.getElementById("tabs").hidden = true;
+  enterStep(0);
+  P.timer = setInterval(tick, 200);
+}
+function stepVideo(ex){
+  const v=ex.video;
+  if(!CAN_EMBED) return `<div class="fallback"><span>Video in dieser Vorschau nicht einbettbar.</span><a href="${esc(v.url)}" target="_blank" rel="noopener">Auf YouTube ansehen ↗</a></div>`;
+  const q=new URLSearchParams({autoplay:"1",mute:"1",controls:"0",playsinline:"1",rel:"0",loop:"1",playlist:v.youtubeId,modestbranding:"1"});
+  if(v.start!=null) q.set("start",v.start); if(v.end!=null) q.set("end",v.end);
+  return `<iframe src="https://www.youtube-nocookie.com/embed/${esc(v.youtubeId)}?${q}" allow="autoplay; encrypted-media" title="${esc(ex.name)}"></iframe>`;
+}
+function enterStep(i){
+  P.i=i; const s=P.steps[i]; P.left = s.dur||0; P.last=performance.now(); P.spoken={};
+  const ex=EX[s.item.ex];
+  const label = s.kind==="ready" ? "Gleich geht's los" : s.kind==="rest" ? (s.roundBreak?"Rundenpause":"Pause") : (s.reps? s.reps+" Wiederholungen" : "Übung");
+  const workIdx = P.steps.slice(0,i+1).filter(x=>x.kind==="work").length, workTotal=P.steps.filter(x=>x.kind==="work").length;
+  const nxt = P.steps.slice(i+1).find(x=>x.kind==="work");
+  view.innerHTML = `<div class="player ${s.kind!=="work"?"is-rest":""}">
+    <div class="phead"><span>Runde ${s.round} von ${P.w.rounds} · Übung ${Math.max(1,workIdx)} von ${workTotal}</span><button class="btn" type="button" id="quit">Beenden</button></div>
+    <div><div class="phase">${esc(label)}</div><div class="pname">${s.kind==="work"?"":"Als Nächstes: "}${esc(ex.name)}</div></div>
+    <div class="media">${stepVideo(ex)}</div>
+    <div class="cue">${esc(ex.cue)}</div>
+    <div class="ringwrap"><div class="ring"><svg viewBox="0 0 120 120"><circle class="bgc" cx="60" cy="60" r="52"/><circle class="fgc" id="arc" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="0"/></svg>
+      <div class="num"><span id="num">${s.reps?"×"+s.reps:fmt(P.left)}</span><small>${s.reps?"in deinem Tempo":"verbleibend"}</small></div></div></div>
+    ${s.kind==="work" && nxt ? `<div class="next">Danach: ${esc(EX[nxt.item.ex].name)}</div>`:""}
+    <div class="pctl">
+      <button class="btn" type="button" id="back">Zurück</button>
+      ${s.reps && s.kind==="work" ? `<button class="btn primary big" type="button" id="done">Fertig</button>` : `<button class="btn primary big" type="button" id="pause">${P.paused?"Weiter":"Pause"}</button>`}
+      <button class="btn" type="button" id="skip">Überspringen</button>
+    </div>
+    <div class="sound"><label><input type="checkbox" id="voice" ${settings.voice?"checked":""}> Ansage</label><label><input type="checkbox" id="beepc" ${settings.beep?"checked":""}> Signalton</label></div>
+  </div>`;
+  document.getElementById("quit").onclick=()=>finish(false);
+  document.getElementById("back").onclick=()=>enterStep(Math.max(0,P.i-1));
+  document.getElementById("skip").onclick=()=>next();
+  const d=document.getElementById("done"); if(d) d.onclick=()=>next();
+  const p=document.getElementById("pause"); if(p) p.onclick=()=>{P.paused=!P.paused; p.textContent=P.paused?"Weiter":"Pause"; P.last=performance.now(); say(P.paused?"Pause":"Weiter");};
+  document.getElementById("voice").onchange=e=>{settings.voice=e.target.checked; store.set("settings",settings);};
+  document.getElementById("beepc").onchange=e=>{settings.beep=e.target.checked; store.set("settings",settings);};
+  // announcements
+  if(s.kind==="ready") say("Mach dich bereit. Als Erstes: "+ex.name);
+  else if(s.kind==="rest") say((s.roundBreak?"Rundenpause. ":"Pause. ")+"Als Nächstes: "+ex.name);
+  else { beep(1046,.25); say(s.reps ? ex.name+". "+s.reps+" Wiederholungen. Tippe auf Fertig, wenn du durch bist." : ex.name+". Los!"); }
+  P.stepStart = performance.now();
+}
+function tick(){
+  if(!P) return;
+  const now=performance.now(), s=P.steps[P.i];
+  if(P.paused){ P.last=now; return; }
+  const dt=(now-P.last)/1000; P.last=now;
+  if(s.kind==="work"){ P.workSecs+=dt; const z=EX[s.item.ex].zone; P.zones[z]=(P.zones[z]||0)+dt; }
+  if(!s.dur) return; // reps step waits for "Fertig"
+  P.left-=dt;
+  const sec=Math.ceil(P.left);
+  const num=document.getElementById("num"), arc=document.getElementById("arc");
+  if(num) num.textContent=fmt(Math.max(0,P.left));
+  if(arc) arc.setAttribute("stroke-dashoffset", String(326.7*(1-Math.max(0,P.left)/s.dur)));
+  if(s.dur>=20 && sec===10 && !P.spoken[10]){ P.spoken[10]=1; say("Noch 10 Sekunden"); }
+  if(s.kind==="work" && s.dur>=40 && sec===Math.round(s.dur/2) && !P.spoken.half){ P.spoken.half=1; say("Halbzeit"); }
+  if(sec<=3 && sec>=1 && !P.spoken["b"+sec]){ P.spoken["b"+sec]=1; beep(660,.1); }
+  if(P.left<=0) next();
+}
+function next(){ if(P.i+1>=P.steps.length) finish(true); else enterStep(P.i+1); }
+function finish(complete){
+  clearInterval(P.timer); try{ wakeLock?.release(); }catch(_){} wakeLock=null;
+  const total=(Date.now()-P.started)/1000;
+  const log=store.get("history",[]);
+  const zones=Object.fromEntries(Object.entries(P.zones).map(([k,v])=>[k,Math.round(v)]));
+  log.push({workout:P.w.id, date:new Date().toISOString(), seconds:Math.round(total), workSeconds:Math.round(P.workSecs), zones, plan:P.planKey, complete});
+  store.set("history",log);
+  if(complete && P.planKey && planState){ planState.done[P.planKey]=new Date().toISOString(); store.set("plan",planState); }
+  if(complete){ beep(1318,.4); say("Geschafft! Starke Leistung."); } else if(window.speechSynthesis) speechSynthesis.cancel();
+  const w=P.w; P=null;
+  document.getElementById("tabs").hidden=false;
+  view.innerHTML=`<div class="finish"><h1>${complete?"Geschafft!":"Workout beendet"}</h1><div class="muted">${esc(w.name)}</div>
+    <div class="stat">${fmt(total)}</div><div class="muted">Gesamtzeit</div>
+    <button class="btn primary big" type="button" id="home">Zu den Workouts</button></div>`;
+  const back = planState && complete && log[log.length-1].plan ? "#plan" : "#workouts";
+  const hb=document.getElementById("home"); if(back==="#plan") hb.textContent="Zum Plan";
+  hb.onclick=()=>{ location.hash=back; route(); };
+}
+
+/* ---------- plan view ---------- */
+function currentWeek(plan){
+  // first week that still has an open session
+  for(const wk of plan.weeks){ if(wk.sessions.some((_,i)=>!planState.done[wk.week+"-"+i])) return wk.week; }
+  return null;
+}
+function renderPlan(){
+  if(!planState || !PLANS.find(p=>p.id===planState.id)){
+    view.innerHTML = `<h1>Trainingsplan</h1><p class="muted">Wähle einen Plan. Die Einheiten werden jede Woche etwas länger und schwerer.</p><div class="cards">${
+      PLANS.map(p=>`<div class="card"><h3>${esc(p.name)}</h3><div class="muted">${esc(p.desc)}</div>
+        <div class="facts"><span class="pill">${p.weeks.length} Wochen</span><span class="pill">${p.weeks[0].sessions.length}× pro Woche</span></div>
+        <button class="btn primary" type="button" data-plan="${p.id}">Plan starten</button></div>`).join("")}</div>`;
+    view.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{
+      planState={id:b.dataset.plan, started:new Date().toISOString(), done:{}}; store.set("plan",planState); renderPlan(); window.scrollTo(0,0);
+    });
+    return;
+  }
+  const plan=PLANS.find(p=>p.id===planState.id);
+  const cur=currentWeek(plan);
+  const total=plan.weeks.reduce((a,w)=>a+w.sessions.length,0), done=Object.keys(planState.done).length;
+  view.innerHTML = `<h1>${esc(plan.name)}</h1><p class="muted">${cur?`Woche ${cur} von ${plan.weeks.length}`:"Plan abgeschlossen"} · ${done} von ${total} Einheiten erledigt</p>
+    <div class="weeks">${plan.weeks.map(wk=>{
+      const d=wk.sessions.filter((_,i)=>planState.done[wk.week+"-"+i]).length;
+      return `<details class="week ${wk.week===cur?"current":""}" ${wk.week===cur?"open":""}><summary><span>Woche ${wk.week}${wk.extra?" · +"+wk.extra+" Runde":""}${wk.scale>1?" · Intensität "+Math.round(wk.scale*100)+" %":""}</span><span class="wk-prog">${d}/${wk.sessions.length}</span></summary>
+        ${wk.sessions.map((s,i)=>{ const key=wk.week+"-"+i, isDone=!!planState.done[key], w=WORKOUTS.find(x=>x.id===s.workout), sw=scaled(w,wk.scale,wk.extra);
+          return `<div class="sess ${isDone?"done":""}"><div class="left"><span class="tick">${isDone?"✓":""}</span><div><div class="sname">${esc(w.name)}</div><div class="muted" style="font-size:.8rem">ca. ${Math.round(workoutSeconds(sw)/60)} Min · ${sw.rounds} ${sw.rounds>1?"Runden":"Runde"}</div></div></div>
+            <button class="btn ${isDone?"":"primary"}" type="button" data-run="${key}">${isDone?"Wiederholen":"Starten"}</button></div>`;}).join("")}
+      </details>`;}).join("")}</div>
+    <p style="margin-top:20px"><button class="btn" type="button" id="leave">Anderen Plan wählen</button></p>`;
+  view.querySelectorAll("[data-run]").forEach(b=>b.onclick=()=>{
+    const [w,i]=b.dataset.run.split("-").map(Number), wk=plan.weeks[w-1];
+    startWorkout(wk.sessions[i].workout,{scale:wk.scale, extra:wk.extra, planKey:b.dataset.run});
+  });
+  const lv=document.getElementById("leave");
+  lv.onclick=()=>{ if(lv.dataset.sure){ planState=null; store.set("plan",null); renderPlan(); window.scrollTo(0,0); } else { lv.dataset.sure="1"; lv.textContent="Sicher? Dein Fortschritt im Plan geht verloren. Nochmal tippen."; } };
+}
+
+/* ---------- stats view ---------- */
+function weekStart(d){ const x=new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return x; }
+function renderStats(){
+  const log=store.get("history",[]).filter(h=>h.complete);
+  if(!log.length){ view.innerHTML=`<h1>Fortschritt</h1><p class="empty">Noch keine Einheit abgeschlossen. Nach deinem ersten Workout siehst du hier deine Serie, deine Trainingszeit pro Woche und welche Körperzonen du trainiert hast.</p>`; return; }
+  const totalMin=Math.round(log.reduce((a,h)=>a+h.seconds,0)/60);
+  // streak in weeks with at least one workout, counting back from this week
+  const wkKeys=new Set(log.map(h=>weekStart(h.date).getTime()));
+  let streak=0, ws=weekStart(new Date());
+  if(!wkKeys.has(ws.getTime())) ws.setDate(ws.getDate()-7);
+  while(wkKeys.has(ws.getTime())){ streak++; ws.setDate(ws.getDate()-7); }
+  const thisWeek=weekStart(new Date()).getTime();
+  const weeks=[]; for(let k=7;k>=0;k--){ const s=new Date(thisWeek); s.setDate(s.getDate()-7*k); const e=new Date(s); e.setDate(e.getDate()+7);
+    weeks.push({s, min:Math.round(log.filter(h=>{const t=new Date(h.date); return t>=s && t<e;}).reduce((a,h)=>a+h.seconds,0)/60)}); }
+  const maxMin=Math.max(10,...weeks.map(w=>w.min));
+  const zones={}; log.forEach(h=>Object.entries(h.zones||{}).forEach(([z,v])=>zones[z]=(zones[z]||0)+v));
+  const zmax=Math.max(1,...Object.values(zones));
+  const longest=Math.max(...log.map(h=>h.seconds));
+  const name=id=>(WORKOUTS.find(w=>w.id===id)||{name:id}).name;
+  view.innerHTML=`<h1>Fortschritt</h1>
+    <div class="kpis">
+      <div class="kpi"><b>${streak}</b><span>${streak===1?"Woche":"Wochen"} in Folge</span></div>
+      <div class="kpi"><b>${log.length}</b><span>Workouts gesamt</span></div>
+      <div class="kpi"><b>${totalMin}</b><span>Minuten gesamt</span></div>
+      <div class="kpi"><b>${fmt(longest)}</b><span>Längstes Workout</span></div>
+    </div>
+    <div class="chart"><strong>Minuten pro Woche</strong>
+      <div class="bars">${weeks.map((w,i)=>`<div class="bar ${i===7?"now":""}"><span>${w.min||""}</span><i style="height:${w.min/maxMin*100}%"></i><span>${i===7?"jetzt":w.s.getDate()+"."+(w.s.getMonth()+1)+"."}</span></div>`).join("")}</div></div>
+    <div class="chart"><strong>Trainierte Körperzonen</strong><div style="margin-top:8px">${ZONES.map(z=>`<div class="zrow"><span>${esc(z)}</span><span class="zt"><i style="width:${(zones[z]||0)/zmax*100}%"></i></span><span>${Math.round((zones[z]||0)/60)} Min</span></div>`).join("")}</div></div>
+    <h2>Letzte Workouts</h2><div class="hist">${log.slice(-10).reverse().map(h=>{const d=new Date(h.date);
+      return `<div><span>${esc(name(h.workout))}</span><span class="muted">${d.toLocaleDateString("de-DE",{weekday:"short",day:"numeric",month:"numeric"})} · ${fmt(h.seconds)}</span></div>`;}).join("")}</div>`;
+}
+
+/* ---------- routing ---------- */
+function route(){
+  if(P) return;
+  const h=location.hash.slice(1);
+  const v = ["uebungen","plan","fortschritt"].includes(h) ? h : "workouts";
+  document.querySelectorAll("#tabs a").forEach(a=>a.setAttribute("aria-current", a.dataset.v===v?"page":"false"));
+  ({uebungen:renderExercises, plan:renderPlan, fortschritt:renderStats, workouts:renderWorkouts})[v]();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+route();
+</script>

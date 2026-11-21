@@ -1,0 +1,14 @@
+[
+{"id":"einsteiger","name":"Einsteiger Ganzkörper","desc":"Sanfter Start für den ganzen Körper.","rounds":2,"rest":20,"roundRest":60,"items":[
+ {"ex":"knieheben-marsch","time":40},{"ex":"kniebeuge","reps":12},{"ex":"knie-liegestuetz","reps":10},{"ex":"glute-bridge","reps":15},{"ex":"plank","time":30},{"ex":"bird-dog","reps":10},{"ex":"ausfallschritt-rueck","reps":10},{"ex":"dead-bug","reps":10}]},
+{"id":"rumpf","name":"Starker Rumpf","desc":"40 Sekunden Arbeit, 20 Sekunden Pause.","rounds":2,"rest":20,"roundRest":45,"items":[
+ {"ex":"dead-bug","time":40},{"ex":"fahrrad-crunch","time":40},{"ex":"plank","time":40},{"ex":"plank-hip-dips","time":40},{"ex":"beinheben","time":40},{"ex":"russian-twist","time":40},{"ex":"seitstuetz","time":40},{"ex":"hollow-hold","time":30}]},
+{"id":"beine-po","name":"Beine und Po","desc":"Kraft für Oberschenkel und Po, ganz ohne Sprünge.","rounds":3,"rest":20,"roundRest":60,"items":[
+ {"ex":"kniebeuge","reps":15},{"ex":"sumo-kniebeuge","reps":15},{"ex":"ausfallschritt-rueck","reps":12},{"ex":"glute-bridge","reps":15},{"ex":"wandsitzen","time":45},{"ex":"fire-hydrant","reps":12},{"ex":"clamshell","reps":15},{"ex":"einbein-bridge","reps":10}]},
+{"id":"oberkoerper","name":"Oberkörper Kraft","desc":"Brust, Schultern, Arme und Rücken.","rounds":3,"rest":30,"roundRest":60,"items":[
+ {"ex":"liegestuetz","reps":10},{"ex":"stuhl-dips","reps":12},{"ex":"superman","reps":12},{"ex":"schultertippen","reps":20},{"ex":"pike-liegestuetz","reps":8},{"ex":"schneeengel","reps":10}]},
+{"id":"ausdauer","name":"Ausdauer ohne Sprung","desc":"Bringt den Puls hoch, schont die Sehnen.","rounds":3,"rest":20,"roundRest":60,"items":[
+ {"ex":"step-jacks","time":40},{"ex":"knieheben-marsch","time":40},{"ex":"burpee-ohne-sprung","time":40},{"ex":"schattenboxen","time":40},{"ex":"mountain-climber-langsam","time":30},{"ex":"kniebeuge","time":40}]},
+{"id":"mobilitaet","name":"Mobilität am Morgen","desc":"Zehn ruhige Minuten für Hüfte und Rücken.","rounds":1,"rest":5,"roundRest":0,"items":[
+ {"ex":"katze-kuh","time":60},{"ex":"worlds-greatest-stretch","time":60},{"ex":"hueftbeuger-dehnung","time":60},{"ex":"herabschauender-hund","time":45},{"ex":"brezel","time":60},{"ex":"liegende-drehung","time":60},{"ex":"beinkreisen","time":45},{"ex":"kindhaltung","time":60}]}
+]

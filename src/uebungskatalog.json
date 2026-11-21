@@ -1,0 +1,797 @@
+[
+ {
+  "id": "liegestuetz",
+  "name": "Liegestütz",
+  "zone": "Oberkörper",
+  "level": "mittel",
+  "muscles": "Brust, Trizeps, Rumpf",
+  "cue": "Körper bleibt eine gerade Linie, Brust bis knapp über den Boden.",
+  "video": {
+   "youtubeId": "s1X8e4JFdbE",
+   "url": "https://www.youtube.com/watch?v=s1X8e4JFdbE",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "knie-liegestuetz",
+  "name": "Knie-Liegestütz",
+  "zone": "Oberkörper",
+  "level": "leicht",
+  "muscles": "Brust, Trizeps",
+  "cue": "Wie der Liegestütz, aber auf den Knien. Hüfte nicht abknicken.",
+  "video": {
+   "youtubeId": "z8nUnCdZXQI",
+   "url": "https://www.youtube.com/watch?v=z8nUnCdZXQI",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "schraeg-liegestuetz",
+  "name": "Liegestütz mit erhöhten Händen",
+  "zone": "Oberkörper",
+  "level": "leicht",
+  "muscles": "Brust, Schultern",
+  "cue": "Hände auf Tisch oder Sofa. Je höher, desto leichter.",
+  "video": {
+   "youtubeId": "0JUrOH--Kdk",
+   "url": "https://www.youtube.com/watch?v=0JUrOH--Kdk",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "diamant-liegestuetz",
+  "name": "Diamant-Liegestütz",
+  "zone": "Oberkörper",
+  "level": "schwer",
+  "muscles": "Trizeps, Brust",
+  "cue": "Daumen und Zeigefinger bilden ein Dreieck unter der Brust.",
+  "video": {
+   "youtubeId": "_4EGPVJuqfA",
+   "url": "https://www.youtube.com/watch?v=_4EGPVJuqfA",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "breite-liegestuetz",
+  "name": "Breiter Liegestütz",
+  "zone": "Oberkörper",
+  "level": "mittel",
+  "muscles": "Brust, Schultern",
+  "cue": "Hände deutlich breiter als schulterbreit.",
+  "video": {
+   "youtubeId": "rr6eFNNDQdU",
+   "url": "https://www.youtube.com/watch?v=rr6eFNNDQdU",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "pike-liegestuetz",
+  "name": "Pike-Liegestütz",
+  "zone": "Oberkörper",
+  "level": "schwer",
+  "muscles": "Schultern, Trizeps",
+  "cue": "Hüfte hoch wie ein umgedrehtes V, Kopf Richtung Boden senken.",
+  "video": {
+   "youtubeId": "9GZeGU2JKIs",
+   "url": "https://www.youtube.com/watch?v=9GZeGU2JKIs",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "stuhl-dips",
+  "name": "Trizeps-Dips am Stuhl",
+  "zone": "Oberkörper",
+  "level": "mittel",
+  "muscles": "Trizeps, Schultern",
+  "cue": "Rücken nah am Stuhl, Ellbogen zeigen nach hinten.",
+  "video": {
+   "youtubeId": "AWz_7B1cch0",
+   "url": "https://www.youtube.com/watch?v=AWz_7B1cch0",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "superman",
+  "name": "Superman",
+  "zone": "Oberkörper",
+  "level": "leicht",
+  "muscles": "Unterer Rücken, Po",
+  "cue": "In Bauchlage Arme und Beine gleichzeitig kurz anheben.",
+  "video": {
+   "youtubeId": "HPFQf4cubhE",
+   "url": "https://www.youtube.com/watch?v=HPFQf4cubhE",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "schneeengel",
+  "name": "Umgekehrter Schneeengel",
+  "zone": "Oberkörper",
+  "level": "leicht",
+  "muscles": "Oberer Rücken, Schultern",
+  "cue": "In Bauchlage die Arme in einem Bogen über dem Boden führen.",
+  "video": {
+   "youtubeId": "qTaGqpAmewg",
+   "url": "https://www.youtube.com/watch?v=qTaGqpAmewg",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "schultertippen",
+  "name": "Plank mit Schultertippen",
+  "zone": "Oberkörper",
+  "level": "mittel",
+  "muscles": "Schultern, Rumpf",
+  "cue": "Im hohen Stütz abwechselnd die Schulter antippen, Hüfte ruhig.",
+  "video": {
+   "youtubeId": "mPIym8BigIc",
+   "url": "https://www.youtube.com/watch?v=mPIym8BigIc",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "inchworm",
+  "name": "Inchworm",
+  "zone": "Oberkörper",
+  "level": "mittel",
+  "muscles": "Schultern, Rumpf, Beinrückseite",
+  "cue": "Aus dem Stand mit den Händen in den Stütz laufen und zurück.",
+  "video": {
+   "youtubeId": "18AQDRxYZGs",
+   "url": "https://www.youtube.com/watch?v=18AQDRxYZGs",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "plank",
+  "name": "Unterarmstütz (Plank)",
+  "zone": "Rumpf",
+  "level": "leicht",
+  "muscles": "Rumpf",
+  "cue": "Ellbogen unter den Schultern, Bauch und Po fest.",
+  "video": {
+   "youtubeId": "BQu26ABuVS0",
+   "url": "https://www.youtube.com/watch?v=BQu26ABuVS0",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "seitstuetz",
+  "name": "Seitstütz",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Seitliche Bauchmuskeln",
+  "cue": "Auf Unterarm und Fußkante, Hüfte oben halten.",
+  "video": {
+   "youtubeId": "rCxF2nG9vQ0",
+   "url": "https://www.youtube.com/watch?v=rCxF2nG9vQ0",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "crunch",
+  "name": "Crunch",
+  "zone": "Rumpf",
+  "level": "leicht",
+  "muscles": "Gerader Bauch",
+  "cue": "Nur Schulterblätter vom Boden lösen, nicht am Kopf ziehen.",
+  "video": {
+   "youtubeId": "gEMYUHv8xZg",
+   "url": "https://www.youtube.com/watch?v=gEMYUHv8xZg",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "fahrrad-crunch",
+  "name": "Fahrrad-Crunch",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Schräge Bauchmuskeln",
+  "cue": "Ellbogen zum gegenüberliegenden Knie, langsam und kontrolliert.",
+  "video": {
+   "youtubeId": "VaL7XWK3MVE",
+   "url": "https://www.youtube.com/watch?v=VaL7XWK3MVE",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "dead-bug",
+  "name": "Dead Bug",
+  "zone": "Rumpf",
+  "level": "leicht",
+  "muscles": "Tiefe Bauchmuskeln",
+  "cue": "Rücken bleibt am Boden, Arm und Gegenbein langsam strecken.",
+  "video": {
+   "youtubeId": "g_BYB0R-4Ws",
+   "url": "https://www.youtube.com/watch?v=g_BYB0R-4Ws",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "bird-dog",
+  "name": "Bird Dog",
+  "zone": "Rumpf",
+  "level": "leicht",
+  "muscles": "Rumpf, Rücken",
+  "cue": "Im Vierfüßlerstand Arm und Gegenbein strecken.",
+  "video": {
+   "youtubeId": "KA0ekfSePrQ",
+   "url": "https://www.youtube.com/watch?v=KA0ekfSePrQ",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "beinheben",
+  "name": "Beinheben im Liegen",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Unterer Bauch",
+  "cue": "Beine gestreckt heben und senken, Rücken nicht ins Hohlkreuz.",
+  "video": {
+   "youtubeId": "sY2ZgV2Sj_s",
+   "url": "https://www.youtube.com/watch?v=sY2ZgV2Sj_s",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "russian-twist",
+  "name": "Russian Twist",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Schräge Bauchmuskeln",
+  "cue": "Oberkörper leicht zurück, von Seite zu Seite drehen.",
+  "video": {
+   "youtubeId": "DCImoMXuMMc",
+   "url": "https://www.youtube.com/watch?v=DCImoMXuMMc",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "hollow-hold",
+  "name": "Hollow Hold",
+  "zone": "Rumpf",
+  "level": "schwer",
+  "muscles": "Ganzer Rumpf",
+  "cue": "Rücken am Boden, Arme und Beine knapp über dem Boden halten.",
+  "video": {
+   "youtubeId": "W3E2SBg1ViQ",
+   "url": "https://www.youtube.com/watch?v=W3E2SBg1ViQ",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "reverse-plank",
+  "name": "Umgekehrter Stütz",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Rumpf, Po, Schultern",
+  "cue": "Rückseite nach unten, Hüfte hoch, Körper gerade.",
+  "video": {
+   "youtubeId": "UIo9QbyT4Pk",
+   "url": "https://www.youtube.com/watch?v=UIo9QbyT4Pk",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "plank-hip-dips",
+  "name": "Plank Hip Dips",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Schräge Bauchmuskeln",
+  "cue": "Im Unterarmstütz die Hüfte abwechselnd zur Seite senken.",
+  "video": {
+   "youtubeId": "hbP5M7qcLJ4",
+   "url": "https://www.youtube.com/watch?v=hbP5M7qcLJ4",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "scheibenwischer",
+  "name": "Scheibenwischer im Liegen",
+  "zone": "Rumpf",
+  "level": "schwer",
+  "muscles": "Schräge Bauchmuskeln",
+  "cue": "Beine senkrecht, langsam von Seite zu Seite kippen.",
+  "video": {
+   "youtubeId": "NAA9pT_PplE",
+   "url": "https://www.youtube.com/watch?v=NAA9pT_PplE",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "flatterbeine",
+  "name": "Flatterbeine",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Unterer Bauch, Hüftbeuger",
+  "cue": "Beine knapp über dem Boden im Wechsel auf und ab.",
+  "video": {
+   "youtubeId": "6D23AyECRGQ",
+   "url": "https://www.youtube.com/watch?v=6D23AyECRGQ",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "baeren-plank",
+  "name": "Bären-Stütz",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Rumpf, Schultern",
+  "cue": "Im Vierfüßlerstand die Knie wenige Zentimeter anheben und halten.",
+  "video": {
+   "youtubeId": "QEXkzQEUiJY",
+   "url": "https://www.youtube.com/watch?v=QEXkzQEUiJY",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "plank-hund",
+  "name": "Plank zum herabschauenden Hund",
+  "zone": "Rumpf",
+  "level": "mittel",
+  "muscles": "Rumpf, Schultern",
+  "cue": "Aus dem hohen Stütz die Hüfte nach oben schieben und zurück.",
+  "video": {
+   "youtubeId": "vXqPc4Uu8X0",
+   "url": "https://www.youtube.com/watch?v=vXqPc4Uu8X0",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "kniebeuge",
+  "name": "Kniebeuge",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Oberschenkel, Po",
+  "cue": "Gewicht auf den Fersen, Knie folgen den Fußspitzen.",
+  "video": {
+   "youtubeId": "RClKKQqsvXA",
+   "url": "https://www.youtube.com/watch?v=RClKKQqsvXA",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "sumo-kniebeuge",
+  "name": "Sumo-Kniebeuge",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Innenschenkel, Po",
+  "cue": "Breiter Stand, Fußspitzen nach außen.",
+  "video": {
+   "youtubeId": "ksmxuw3JDbQ",
+   "url": "https://www.youtube.com/watch?v=ksmxuw3JDbQ",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "ausfallschritt",
+  "name": "Ausfallschritt vorwärts",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Oberschenkel, Po",
+  "cue": "Großer Schritt, hinteres Knie Richtung Boden.",
+  "video": {
+   "youtubeId": "WzONHuAe6BY",
+   "url": "https://www.youtube.com/watch?v=WzONHuAe6BY",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "ausfallschritt-rueck",
+  "name": "Ausfallschritt rückwärts",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Oberschenkel, Po",
+  "cue": "Schritt nach hinten, schont die Knie mehr als vorwärts.",
+  "video": {
+   "youtubeId": "-HjB2x75haE",
+   "url": "https://www.youtube.com/watch?v=-HjB2x75haE",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "seit-ausfallschritt",
+  "name": "Seitlicher Ausfallschritt",
+  "zone": "Beine & Po",
+  "level": "mittel",
+  "muscles": "Innenschenkel, Po",
+  "cue": "Zur Seite steigen, Gewicht ins gebeugte Bein, anderes Bein gestreckt.",
+  "video": {
+   "youtubeId": "apsp_uuXZTU",
+   "url": "https://www.youtube.com/watch?v=apsp_uuXZTU",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "bulgarian-split-squat",
+  "name": "Bulgarische Kniebeuge",
+  "zone": "Beine & Po",
+  "level": "schwer",
+  "muscles": "Oberschenkel, Po",
+  "cue": "Hinterer Fuß auf Stuhl oder Sofa, vorderes Bein beugen.",
+  "video": {
+   "youtubeId": "oGTVhFgRnes",
+   "url": "https://www.youtube.com/watch?v=oGTVhFgRnes",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "wandsitzen",
+  "name": "Wandsitzen",
+  "zone": "Beine & Po",
+  "level": "mittel",
+  "muscles": "Oberschenkel",
+  "cue": "Rücken an der Wand, Knie im rechten Winkel halten.",
+  "video": {
+   "youtubeId": "JaZNYM3zAP0",
+   "url": "https://www.youtube.com/watch?v=JaZNYM3zAP0",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "glute-bridge",
+  "name": "Glute Bridge",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Po, Beinrückseite",
+  "cue": "In Rückenlage die Hüfte heben, oben den Po anspannen.",
+  "video": {
+   "youtubeId": "KI6fjDqGZh4",
+   "url": "https://www.youtube.com/watch?v=KI6fjDqGZh4",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "einbein-bridge",
+  "name": "Einbeinige Glute Bridge",
+  "zone": "Beine & Po",
+  "level": "mittel",
+  "muscles": "Po, Beinrückseite",
+  "cue": "Wie die Glute Bridge, ein Bein gestreckt in der Luft.",
+  "video": {
+   "youtubeId": "Zb3ILLdI6fk",
+   "url": "https://www.youtube.com/watch?v=Zb3ILLdI6fk",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "step-up",
+  "name": "Aufsteigen auf Stuhl oder Stufe",
+  "zone": "Beine & Po",
+  "level": "mittel",
+  "muscles": "Oberschenkel, Po",
+  "cue": "Ganzen Fuß aufsetzen, aus dem oberen Bein hochdrücken.",
+  "video": {
+   "youtubeId": "aajhW7DD1EA",
+   "url": "https://www.youtube.com/watch?v=aajhW7DD1EA",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "donkey-kicks",
+  "name": "Donkey Kicks",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Po",
+  "cue": "Im Vierfüßlerstand ein gebeugtes Bein nach oben drücken.",
+  "video": {
+   "youtubeId": "bGgayVSKmC4",
+   "url": "https://www.youtube.com/watch?v=bGgayVSKmC4",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "fire-hydrant",
+  "name": "Fire Hydrant",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Seitlicher Po",
+  "cue": "Im Vierfüßlerstand das gebeugte Bein seitlich anheben.",
+  "video": {
+   "youtubeId": "hdw6-OI6WUU",
+   "url": "https://www.youtube.com/watch?v=hdw6-OI6WUU",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "clamshell",
+  "name": "Clamshell",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Seitlicher Po, Hüfte",
+  "cue": "In Seitlage die Knie wie eine Muschel öffnen.",
+  "video": {
+   "youtubeId": "7iXpLxKs1sY",
+   "url": "https://www.youtube.com/watch?v=7iXpLxKs1sY",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "good-morning",
+  "name": "Good Morning ohne Gewicht",
+  "zone": "Beine & Po",
+  "level": "leicht",
+  "muscles": "Beinrückseite, unterer Rücken",
+  "cue": "Hüfte nach hinten schieben, Rücken gerade, wieder aufrichten.",
+  "video": {
+   "youtubeId": "9ylRcYLSz40",
+   "url": "https://www.youtube.com/watch?v=9ylRcYLSz40",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "step-jacks",
+  "name": "Hampelmann ohne Sprung",
+  "zone": "Ausdauer ohne Sprung",
+  "level": "leicht",
+  "muscles": "Ganzkörper, Kreislauf",
+  "cue": "Im Wechsel ein Bein zur Seite setzen, Arme über den Kopf.",
+  "video": {
+   "youtubeId": "Bqy1xIXX2nc",
+   "url": "https://www.youtube.com/watch?v=Bqy1xIXX2nc",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "burpee-ohne-sprung",
+  "name": "Burpee ohne Sprung",
+  "zone": "Ausdauer ohne Sprung",
+  "level": "mittel",
+  "muscles": "Ganzkörper, Kreislauf",
+  "cue": "Hände runter, Beine einzeln nach hinten setzen, zurück, aufrichten.",
+  "video": {
+   "youtubeId": "iUL2tndomms",
+   "url": "https://www.youtube.com/watch?v=iUL2tndomms",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "mountain-climber-langsam",
+  "name": "Mountain Climbers, langsam",
+  "zone": "Ausdauer ohne Sprung",
+  "level": "mittel",
+  "muscles": "Rumpf, Kreislauf",
+  "cue": "Im Stütz die Knie abwechselnd zur Brust ziehen. Steht auf den Fußballen, bei Fersenbeschwerden weglassen.",
+  "video": {
+   "youtubeId": "nZanR-lyges",
+   "url": "https://www.youtube.com/watch?v=nZanR-lyges",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "knieheben-marsch",
+  "name": "Marschieren mit Knieheben",
+  "zone": "Ausdauer ohne Sprung",
+  "level": "leicht",
+  "muscles": "Hüftbeuger, Kreislauf",
+  "cue": "Auf der Stelle marschieren, Knie bis Hüfthöhe, Arme mitnehmen.",
+  "video": {
+   "youtubeId": "eZ78am7MdcU",
+   "url": "https://www.youtube.com/watch?v=eZ78am7MdcU",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "schattenboxen",
+  "name": "Schattenboxen",
+  "zone": "Ausdauer ohne Sprung",
+  "level": "leicht",
+  "muscles": "Schultern, Rumpf, Kreislauf",
+  "cue": "Schnelle Schläge in die Luft, Füße bleiben am Boden.",
+  "video": {
+   "youtubeId": "i12A6G_LiJo",
+   "url": "https://www.youtube.com/watch?v=i12A6G_LiJo",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "worlds-greatest-stretch",
+  "name": "World's Greatest Stretch",
+  "zone": "Mobilität",
+  "level": "leicht",
+  "muscles": "Hüfte, Brustwirbelsäule",
+  "cue": "Tiefer Ausfallschritt, Ellbogen zum Boden, dann Arm aufdrehen.",
+  "video": {
+   "youtubeId": "T6j7BpxeqqU",
+   "url": "https://www.youtube.com/watch?v=T6j7BpxeqqU",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "herabschauender-hund",
+  "name": "Herabschauender Hund",
+  "zone": "Mobilität",
+  "level": "leicht",
+  "muscles": "Schultern, Beinrückseite, Waden",
+  "cue": "Hüfte hoch, Fersen nur so weit Richtung Boden, wie es angenehm ist.",
+  "video": {
+   "youtubeId": "ulZr-S0cFOI",
+   "url": "https://www.youtube.com/watch?v=ulZr-S0cFOI",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "katze-kuh",
+  "name": "Katze-Kuh",
+  "zone": "Mobilität",
+  "level": "leicht",
+  "muscles": "Wirbelsäule",
+  "cue": "Im Vierfüßlerstand den Rücken abwechselnd rund und hohl machen.",
+  "video": {
+   "youtubeId": "xyNwxiuERXc",
+   "url": "https://www.youtube.com/watch?v=xyNwxiuERXc",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "kindhaltung",
+  "name": "Kindhaltung",
+  "zone": "Mobilität",
+  "level": "leicht",
+  "muscles": "Rücken, Hüfte",
+  "cue": "Auf die Fersen setzen, Arme lang nach vorn, ausatmen.",
+  "video": {
+   "youtubeId": "4wjV4HdJG8Y",
+   "url": "https://www.youtube.com/watch?v=4wjV4HdJG8Y",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "hueftbeuger-dehnung",
+  "name": "Hüftbeuger-Dehnung kniend",
+  "zone": "Mobilität",
+  "level": "leicht",
+  "muscles": "Hüftbeuger",
+  "cue": "Im Halbkniestand die Hüfte nach vorn schieben, Po anspannen.",
+  "video": {
+   "youtubeId": "K5EZ8ztNEcw",
+   "url": "https://www.youtube.com/watch?v=K5EZ8ztNEcw",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "liegende-drehung",
+  "name": "Liegende Drehung",
+  "zone": "Mobilität",
+  "level": "leicht",
+  "muscles": "Rücken, Hüfte",
+  "cue": "In Rückenlage die Knie zur Seite sinken lassen, Schultern bleiben unten.",
+  "video": {
+   "youtubeId": "1CorCS9-izg",
+   "url": "https://www.youtube.com/watch?v=1CorCS9-izg",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "brezel",
+  "name": "Brezel-Dehnung",
+  "zone": "Mobilität",
+  "level": "mittel",
+  "muscles": "Hüfte, Brustwirbelsäule, Oberschenkel",
+  "cue": "In Seitlage oberes Knie vorn, hinteren Fuß greifen, Oberkörper aufdrehen.",
+  "video": {
+   "youtubeId": "JQLCTOxxnqU",
+   "url": "https://www.youtube.com/watch?v=JQLCTOxxnqU",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ },
+ {
+  "id": "beinkreisen",
+  "name": "Beinkreisen im Liegen",
+  "zone": "Mobilität",
+  "level": "leicht",
+  "muscles": "Hüfte, Bauch",
+  "cue": "In Rückenlage ein gestrecktes Bein in kleinen Kreisen führen.",
+  "video": {
+   "youtubeId": "P2Wn_Zjs_jo",
+   "url": "https://www.youtube.com/watch?v=P2Wn_Zjs_jo",
+   "start": null,
+   "end": null
+  },
+  "jumps": false
+ }
+]

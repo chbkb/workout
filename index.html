@@ -1,0 +1,384 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Körperkraft"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Körperkraft Training</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#0f1715">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: phone-first app shell; top bar, one view at a time, bottom tab bar; player is a full-screen view with a timer ring */
+:root{
+  --bg:#f3f6f5; --surface:#ffffff; --fg:#14201c; --muted:#5a6a65; --line:#d7e0dd;
+  --accent:#0d7a64; --accent-soft:#dcefe9; --rest:#3e5fa8; --rest-soft:#e3e9f7; --warn:#a4520c;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1715; --surface:#17221f; --fg:#e4ece9; --muted:#93a59f; --line:#2a3833;
+  --accent:#45c3a5; --accent-soft:#18352e; --rest:#8fa9ec; --rest-soft:#1c2540; --warn:#f0a35e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1715; --surface:#17221f; --fg:#e4ece9; --muted:#93a59f; --line:#2a3833;
+  --accent:#45c3a5; --accent-soft:#18352e; --rest:#8fa9ec; --rest-soft:#1c2540; --warn:#f0a35e; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 96px}
+h1,h2,h3{font-family:var(--display);letter-spacing:.01em;text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:2.1rem} h2{font-size:1.4rem;margin-top:24px} h3{font-size:1.2rem}
+.muted{color:var(--muted)}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;gap:4px;padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.tabs a{flex:1;max-width:200px;text-align:center;padding:8px;border-radius:8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.9rem}
+.tabs a[aria-current="page"]{color:var(--accent);background:var(--accent-soft)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card .facts{display:flex;flex-wrap:wrap;gap:6px;font-size:.8rem;font-variant-numeric:tabular-nums}
+.pill{padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:.75rem}
+.btn{font:600 .95rem var(--body);padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn.big{padding:14px 22px;font-size:1.05rem}
+.card .btn{align-self:flex-start;margin-top:auto}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{font:500 .82rem var(--body);padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.exlist{margin-top:12px;border-top:1px solid var(--line)}
+.exrow{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.exrow > div{min-width:0}
+.exrow a{color:var(--accent);font-weight:600;font-size:.85rem;white-space:nowrap;text-decoration:none}
+.lvl{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:600;margin-left:6px}
+/* player */
+.player{display:flex;flex-direction:column;gap:14px}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-variant-numeric:tabular-nums;font-size:.85rem;color:var(--muted)}
+.phase{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--accent)}
+.player.is-rest .phase{color:var(--rest)}
+.pname{font-family:var(--display);font-size:2.2rem;line-height:1.05;text-wrap:balance}
+.media{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--line)}
+.media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.media .fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:16px;color:var(--muted)}
+.media .fallback a{color:var(--accent);font-weight:600}
+.cue{font-size:.95rem}
+.ringwrap{display:flex;justify-content:center}
+.ring{position:relative;width:min(220px,60vw);aspect-ratio:1}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .bgc{stroke:var(--line)}
+.ring .fgc{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.player.is-rest .ring .fgc{stroke:var(--rest)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--display);font-size:4rem;line-height:1;font-variant-numeric:tabular-nums}
+.ring .num small{font-family:var(--body);font-size:.85rem;color:var(--muted)}
+.next{font-size:.9rem;color:var(--muted);text-align:center}
+.pctl{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.sound{display:flex;justify-content:center;gap:8px;font-size:.85rem;color:var(--muted);align-items:center}
+.finish{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding-top:24px}
+.finish .stat{font-family:var(--display);font-size:3rem;font-variant-numeric:tabular-nums}
+/* plans */
+.weeks{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.week{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.week.current{border-color:var(--accent)}
+.week summary{cursor:pointer;display:flex;justify-content:space-between;gap:8px;font-weight:600;list-style:none}
+.week summary::-webkit-details-marker{display:none}
+.wk-prog{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:500;font-size:.85rem}
+.sess{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)}
+.sess:first-of-type{margin-top:10px}
+.sess > div{min-width:0}
+.sess.done .sname{text-decoration:line-through;color:var(--muted)}
+.tick{display:inline-flex;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);align-items:center;justify-content:center;font-size:.75rem;flex:none;color:var(--bg)}
+.sess.done .tick{background:var(--accent);border-color:var(--accent)}
+.sess .left{display:flex;gap:10px;align-items:center}
+/* stats */
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+@media (min-width:560px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi b{display:block;font-family:var(--display);font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:.8rem;color:var(--muted)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px}
+.bars{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;align-items:end;height:140px;margin-top:10px}
+.bar{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar i{display:block;width:100%;background:var(--accent);border-radius:4px 4px 0 0;min-height:2px}
+.bar.now i{background:var(--rest)}
+.zrow{display:grid;grid-template-columns:9.5em 1fr 3.5em;gap:8px;align-items:center;font-size:.85rem;padding:4px 0;font-variant-numeric:tabular-nums}
+.zrow .zt{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.zrow .zt i{display:block;height:100%;background:var(--accent)}
+.hist{margin-top:8px}
+.hist div{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line);font-size:.88rem;font-variant-numeric:tabular-nums}
+.empty{padding:24px 0;color:var(--muted)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.ring .fgc{transition:none}}
+</style>
+
+<div class="wrap" id="view"></div>
+<nav class="tabs" id="tabs">
+  <a href="#workouts" data-v="workouts">Workouts</a>
+  <a href="#plan" data-v="plan">Plan</a>
+  <a href="#uebungen" data-v="uebungen">Übungen</a>
+  <a href="#fortschritt" data-v="fortschritt">Fortschritt</a>
+</nav>
+
+<script>
+const CATALOG = [{"id":"liegestuetz","name":"Liegestütz","zone":"Oberkörper","level":"mittel","muscles":"Brust, Trizeps, Rumpf","cue":"Körper bleibt eine gerade Linie, Brust bis knapp über den Boden.","video":{"youtubeId":"s1X8e4JFdbE","url":"https://www.youtube.com/watch?v=s1X8e4JFdbE","start":null,"end":null},"jumps":false},{"id":"knie-liegestuetz","name":"Knie-Liegestütz","zone":"Oberkörper","level":"leicht","muscles":"Brust, Trizeps","cue":"Wie der Liegestütz, aber auf den Knien. Hüfte nicht abknicken.","video":{"youtubeId":"z8nUnCdZXQI","url":"https://www.youtube.com/watch?v=z8nUnCdZXQI","start":null,"end":null},"jumps":false},{"id":"schraeg-liegestuetz","name":"Liegestütz mit erhöhten Händen","zone":"Oberkörper","level":"leicht","muscles":"Brust, Schultern","cue":"Hände auf Tisch oder Sofa. Je höher, desto leichter.","video":{"youtubeId":"0JUrOH--Kdk","url":"https://www.youtube.com/watch?v=0JUrOH--Kdk","start":null,"end":null},"jumps":false},{"id":"diamant-liegestuetz","name":"Diamant-Liegestütz","zone":"Oberkörper","level":"schwer","muscles":"Trizeps, Brust","cue":"Daumen und Zeigefinger bilden ein Dreieck unter der Brust.","video":{"youtubeId":"_4EGPVJuqfA","url":"https://www.youtube.com/watch?v=_4EGPVJuqfA","start":null,"end":null},"jumps":false},{"id":"breite-liegestuetz","name":"Breiter Liegestütz","zone":"Oberkörper","level":"mittel","muscles":"Brust, Schultern","cue":"Hände deutlich breiter als schulterbreit.","video":{"youtubeId":"rr6eFNNDQdU","url":"https://www.youtube.com/watch?v=rr6eFNNDQdU","start":null,"end":null},"jumps":false},{"id":"pike-liegestuetz","name":"Pike-Liegestütz","zone":"Oberkörper","level":"schwer","muscles":"Schultern, Trizeps","cue":"Hüfte hoch wie ein umgedrehtes V, Kopf Richtung Boden senken.","video":{"youtubeId":"9GZeGU2JKIs","url":"https://www.youtube.com/watch?v=9GZeGU2JKIs","start":null,"end":null},"jumps":false},{"id":"stuhl-dips","name":"Trizeps-Dips am Stuhl","zone":"Oberkörper","level":"mittel","muscles":"Trizeps, Schultern","cue":"Rücken nah am Stuhl, Ellbogen zeigen nach hinten.","video":{"youtubeId":"AWz_7B1cch0","url":"https://www.youtube.com/watch?v=AWz_7B1cch0","start":null,"end":null},"jumps":false},{"id":"superman","name":"Superman","zone":"Oberkörper","level":"leicht","muscles":"Unterer Rücken, Po","cue":"In Bauchlage Arme und Beine gleichzeitig kurz anheben.","video":{"youtubeId":"HPFQf4cubhE","url":"https://www.youtube.com/watch?v=HPFQf4cubhE","start":null,"end":null},"jumps":false},{"id":"schneeengel","name":"Umgekehrter Schneeengel","zone":"Oberkörper","level":"leicht","muscles":"Oberer Rücken, Schultern","cue":"In Bauchlage die Arme in einem Bogen über dem Boden führen.","video":{"youtubeId":"qTaGqpAmewg","url":"https://www.youtube.com/watch?v=qTaGqpAmewg","start":null,"end":null},"jumps":false},{"id":"schultertippen","name":"Plank mit Schultertippen","zone":"Oberkörper","level":"mittel","muscles":"Schultern, Rumpf","cue":"Im hohen Stütz abwechselnd die Schulter antippen, Hüfte ruhig.","video":{"youtubeId":"mPIym8BigIc","url":"https://www.youtube.com/watch?v=mPIym8BigIc","start":null,"end":null},"jumps":false},{"id":"inchworm","name":"Inchworm","zone":"Oberkörper","level":"mittel","muscles":"Schultern, Rumpf, Beinrückseite","cue":"Aus dem Stand mit den Händen in den Stütz laufen und zurück.","video":{"youtubeId":"18AQDRxYZGs","url":"https://www.youtube.com/watch?v=18AQDRxYZGs","start":null,"end":null},"jumps":false},{"id":"plank","name":"Unterarmstütz (Plank)","zone":"Rumpf","level":"leicht","muscles":"Rumpf","cue":"Ellbogen unter den Schultern, Bauch und Po fest.","video":{"youtubeId":"BQu26ABuVS0","url":"https://www.youtube.com/watch?v=BQu26ABuVS0","start":null,"end":null},"jumps":false},{"id":"seitstuetz","name":"Seitstütz","zone":"Rumpf","level":"mittel","muscles":"Seitliche Bauchmuskeln","cue":"Auf Unterarm und Fußkante, Hüfte oben halten.","video":{"youtubeId":"rCxF2nG9vQ0","url":"https://www.youtube.com/watch?v=rCxF2nG9vQ0","start":null,"end":null},"jumps":false},{"id":"crunch","name":"Crunch","zone":"Rumpf","level":"leicht","muscles":"Gerader Bauch","cue":"Nur Schulterblätter vom Boden lösen, nicht am Kopf ziehen.","video":{"youtubeId":"gEMYUHv8xZg","url":"https://www.youtube.com/watch?v=gEMYUHv8xZg","start":null,"end":null},"jumps":false},{"id":"fahrrad-crunch","name":"Fahrrad-Crunch","zone":"Rumpf","level":"mittel","muscles":"Schräge Bauchmuskeln","cue":"Ellbogen zum gegenüberliegenden Knie, langsam und kontrolliert.","video":{"youtubeId":"VaL7XWK3MVE","url":"https://www.youtube.com/watch?v=VaL7XWK3MVE","start":null,"end":null},"jumps":false},{"id":"dead-bug","name":"Dead Bug","zone":"Rumpf","level":"leicht","muscles":"Tiefe Bauchmuskeln","cue":"Rücken bleibt am Boden, Arm und Gegenbein langsam strecken.","video":{"youtubeId":"g_BYB0R-4Ws","url":"https://www.youtube.com/watch?v=g_BYB0R-4Ws","start":null,"end":null},"jumps":false},{"id":"bird-dog","name":"Bird Dog","zone":"Rumpf","level":"leicht","muscles":"Rumpf, Rücken","cue":"Im Vierfüßlerstand Arm und Gegenbein strecken.","video":{"youtubeId":"KA0ekfSePrQ","url":"https://www.youtube.com/watch?v=KA0ekfSePrQ","start":null,"end":null},"jumps":false},{"id":"beinheben","name":"Beinheben im Liegen","zone":"Rumpf","level":"mittel","muscles":"Unterer Bauch","cue":"Beine gestreckt heben und senken, Rücken nicht ins Hohlkreuz.","video":{"youtubeId":"sY2ZgV2Sj_s","url":"https://www.youtube.com/watch?v=sY2ZgV2Sj_s","start":null,"end":null},"jumps":false},{"id":"russian-twist","name":"Russian Twist","zone":"Rumpf","level":"mittel","muscles":"Schräge Bauchmuskeln","cue":"Oberkörper leicht zurück, von Seite zu Seite drehen.","video":{"youtubeId":"DCImoMXuMMc","url":"https://www.youtube.com/watch?v=DCImoMXuMMc","start":null,"end":null},"jumps":false},{"id":"hollow-hold","name":"Hollow Hold","zone":"Rumpf","level":"schwer","muscles":"Ganzer Rumpf","cue":"Rücken am Boden, Arme und Beine knapp über dem Boden halten.","video":{"youtubeId":"W3E2SBg1ViQ","url":"https://www.youtube.com/watch?v=W3E2SBg1ViQ","start":null,"end":null},"jumps":false},{"id":"reverse-plank","name":"Umgekehrter Stütz","zone":"Rumpf","level":"mittel","muscles":"Rumpf, Po, Schultern","cue":"Rückseite nach unten, Hüfte hoch, Körper gerade.","video":{"youtubeId":"UIo9QbyT4Pk","url":"https://www.youtube.com/watch?v=UIo9QbyT4Pk","start":null,"end":null},"jumps":false},{"id":"plank-hip-dips","name":"Plank Hip Dips","zone":"Rumpf","level":"mittel","muscles":"Schräge Bauchmuskeln","cue":"Im Unterarmstütz die Hüfte abwechselnd zur Seite senken.","video":{"youtubeId":"hbP5M7qcLJ4","url":"https://www.youtube.com/watch?v=hbP5M7qcLJ4","start":null,"end":null},"jumps":false},{"id":"scheibenwischer","name":"Scheibenwischer im Liegen","zone":"Rumpf","level":"schwer","muscles":"Schräge Bauchmuskeln","cue":"Beine senkrecht, langsam von Seite zu Seite kippen.","video":{"youtubeId":"NAA9pT_PplE","url":"https://www.youtube.com/watch?v=NAA9pT_PplE","start":null,"end":null},"jumps":false},{"id":"flatterbeine","name":"Flatterbeine","zone":"Rumpf","level":"mittel","muscles":"Unterer Bauch, Hüftbeuger","cue":"Beine knapp über dem Boden im Wechsel auf und ab.","video":{"youtubeId":"6D23AyECRGQ","url":"https://www.youtube.com/watch?v=6D23AyECRGQ","start":null,"end":null},"jumps":false},{"id":"baeren-plank","name":"Bären-Stütz","zone":"Rumpf","level":"mittel","muscles":"Rumpf, Schultern","cue":"Im Vierfüßlerstand die Knie wenige Zentimeter anheben und halten.","video":{"youtubeId":"QEXkzQEUiJY","url":"https://www.youtube.com/watch?v=QEXkzQEUiJY","start":null,"end":null},"jumps":false},{"id":"plank-hund","name":"Plank zum herabschauenden Hund","zone":"Rumpf","level":"mittel","muscles":"Rumpf, Schultern","cue":"Aus dem hohen Stütz die Hüfte nach oben schieben und zurück.","video":{"youtubeId":"vXqPc4Uu8X0","url":"https://www.youtube.com/watch?v=vXqPc4Uu8X0","start":null,"end":null},"jumps":false},{"id":"kniebeuge","name":"Kniebeuge","zone":"Beine & Po","level":"leicht","muscles":"Oberschenkel, Po","cue":"Gewicht auf den Fersen, Knie folgen den Fußspitzen.","video":{"youtubeId":"RClKKQqsvXA","url":"https://www.youtube.com/watch?v=RClKKQqsvXA","start":null,"end":null},"jumps":false},{"id":"sumo-kniebeuge","name":"Sumo-Kniebeuge","zone":"Beine & Po","level":"leicht","muscles":"Innenschenkel, Po","cue":"Breiter Stand, Fußspitzen nach außen.","video":{"youtubeId":"ksmxuw3JDbQ","url":"https://www.youtube.com/watch?v=ksmxuw3JDbQ","start":null,"end":null},"jumps":false},{"id":"ausfallschritt","name":"Ausfallschritt vorwärts","zone":"Beine & Po","level":"leicht","muscles":"Oberschenkel, Po","cue":"Großer Schritt, hinteres Knie Richtung Boden.","video":{"youtubeId":"WzONHuAe6BY","url":"https://www.youtube.com/watch?v=WzONHuAe6BY","start":null,"end":null},"jumps":false},{"id":"ausfallschritt-rueck","name":"Ausfallschritt rückwärts","zone":"Beine & Po","level":"leicht","muscles":"Oberschenkel, Po","cue":"Schritt nach hinten, schont die Knie mehr als vorwärts.","video":{"youtubeId":"-HjB2x75haE","url":"https://www.youtube.com/watch?v=-HjB2x75haE","start":null,"end":null},"jumps":false},{"id":"seit-ausfallschritt","name":"Seitlicher Ausfallschritt","zone":"Beine & Po","level":"mittel","muscles":"Innenschenkel, Po","cue":"Zur Seite steigen, Gewicht ins gebeugte Bein, anderes Bein gestreckt.","video":{"youtubeId":"apsp_uuXZTU","url":"https://www.youtube.com/watch?v=apsp_uuXZTU","start":null,"end":null},"jumps":false},{"id":"bulgarian-split-squat","name":"Bulgarische Kniebeuge","zone":"Beine & Po","level":"schwer","muscles":"Oberschenkel, Po","cue":"Hinterer Fuß auf Stuhl oder Sofa, vorderes Bein beugen.","video":{"youtubeId":"oGTVhFgRnes","url":"https://www.youtube.com/watch?v=oGTVhFgRnes","start":null,"end":null},"jumps":false},{"id":"wandsitzen","name":"Wandsitzen","zone":"Beine & Po","level":"mittel","muscles":"Oberschenkel","cue":"Rücken an der Wand, Knie im rechten Winkel halten.","video":{"youtubeId":"JaZNYM3zAP0","url":"https://www.youtube.com/watch?v=JaZNYM3zAP0","start":null,"end":null},"jumps":false},{"id":"glute-bridge","name":"Glute Bridge","zone":"Beine & Po","level":"leicht","muscles":"Po, Beinrückseite","cue":"In Rückenlage die Hüfte heben, oben den Po anspannen.","video":{"youtubeId":"KI6fjDqGZh4","url":"https://www.youtube.com/watch?v=KI6fjDqGZh4","start":null,"end":null},"jumps":false},{"id":"einbein-bridge","name":"Einbeinige Glute Bridge","zone":"Beine & Po","level":"mittel","muscles":"Po, Beinrückseite","cue":"Wie die Glute Bridge, ein Bein gestreckt in der Luft.","video":{"youtubeId":"Zb3ILLdI6fk","url":"https://www.youtube.com/watch?v=Zb3ILLdI6fk","start":null,"end":null},"jumps":false},{"id":"step-up","name":"Aufsteigen auf Stuhl oder Stufe","zone":"Beine & Po","level":"mittel","muscles":"Oberschenkel, Po","cue":"Ganzen Fuß aufsetzen, aus dem oberen Bein hochdrücken.","video":{"youtubeId":"aajhW7DD1EA","url":"https://www.youtube.com/watch?v=aajhW7DD1EA","start":null,"end":null},"jumps":false},{"id":"donkey-kicks","name":"Donkey Kicks","zone":"Beine & Po","level":"leicht","muscles":"Po","cue":"Im Vierfüßlerstand ein gebeugtes Bein nach oben drücken.","video":{"youtubeId":"bGgayVSKmC4","url":"https://www.youtube.com/watch?v=bGgayVSKmC4","start":null,"end":null},"jumps":false},{"id":"fire-hydrant","name":"Fire Hydrant","zone":"Beine & Po","level":"leicht","muscles":"Seitlicher Po","cue":"Im Vierfüßlerstand das gebeugte Bein seitlich anheben.","video":{"youtubeId":"hdw6-OI6WUU","url":"https://www.youtube.com/watch?v=hdw6-OI6WUU","start":null,"end":null},"jumps":false},{"id":"clamshell","name":"Clamshell","zone":"Beine & Po","level":"leicht","muscles":"Seitlicher Po, Hüfte","cue":"In Seitlage die Knie wie eine Muschel öffnen.","video":{"youtubeId":"7iXpLxKs1sY","url":"https://www.youtube.com/watch?v=7iXpLxKs1sY","start":null,"end":null},"jumps":false},{"id":"good-morning","name":"Good Morning ohne Gewicht","zone":"Beine & Po","level":"leicht","muscles":"Beinrückseite, unterer Rücken","cue":"Hüfte nach hinten schieben, Rücken gerade, wieder aufrichten.","video":{"youtubeId":"9ylRcYLSz40","url":"https://www.youtube.com/watch?v=9ylRcYLSz40","start":null,"end":null},"jumps":false},{"id":"step-jacks","name":"Hampelmann ohne Sprung","zone":"Ausdauer ohne Sprung","level":"leicht","muscles":"Ganzkörper, Kreislauf","cue":"Im Wechsel ein Bein zur Seite setzen, Arme über den Kopf.","video":{"youtubeId":"Bqy1xIXX2nc","url":"https://www.youtube.com/watch?v=Bqy1xIXX2nc","start":null,"end":null},"jumps":false},{"id":"burpee-ohne-sprung","name":"Burpee ohne Sprung","zone":"Ausdauer ohne Sprung","level":"mittel","muscles":"Ganzkörper, Kreislauf","cue":"Hände runter, Beine einzeln nach hinten setzen, zurück, aufrichten.","video":{"youtubeId":"iUL2tndomms","url":"https://www.youtube.com/watch?v=iUL2tndomms","start":null,"end":null},"jumps":false},{"id":"mountain-climber-langsam","name":"Mountain Climbers, langsam","zone":"Ausdauer ohne Sprung","level":"mittel","muscles":"Rumpf, Kreislauf","cue":"Im Stütz die Knie abwechselnd zur Brust ziehen. Steht auf den Fußballen, bei Fersenbeschwerden weglassen.","video":{"youtubeId":"nZanR-lyges","url":"https://www.youtube.com/watch?v=nZanR-lyges","start":null,"end":null},"jumps":false},{"id":"knieheben-marsch","name":"Marschieren mit Knieheben","zone":"Ausdauer ohne Sprung","level":"leicht","muscles":"Hüftbeuger, Kreislauf","cue":"Auf der Stelle marschieren, Knie bis Hüfthöhe, Arme mitnehmen.","video":{"youtubeId":"eZ78am7MdcU","url":"https://www.youtube.com/watch?v=eZ78am7MdcU","start":null,"end":null},"jumps":false},{"id":"schattenboxen","name":"Schattenboxen","zone":"Ausdauer ohne Sprung","level":"leicht","muscles":"Schultern, Rumpf, Kreislauf","cue":"Schnelle Schläge in die Luft, Füße bleiben am Boden.","video":{"youtubeId":"i12A6G_LiJo","url":"https://www.youtube.com/watch?v=i12A6G_LiJo","start":null,"end":null},"jumps":false},{"id":"worlds-greatest-stretch","name":"World's Greatest Stretch","zone":"Mobilität","level":"leicht","muscles":"Hüfte, Brustwirbelsäule","cue":"Tiefer Ausfallschritt, Ellbogen zum Boden, dann Arm aufdrehen.","video":{"youtubeId":"T6j7BpxeqqU","url":"https://www.youtube.com/watch?v=T6j7BpxeqqU","start":null,"end":null},"jumps":false},{"id":"herabschauender-hund","name":"Herabschauender Hund","zone":"Mobilität","level":"leicht","muscles":"Schultern, Beinrückseite, Waden","cue":"Hüfte hoch, Fersen nur so weit Richtung Boden, wie es angenehm ist.","video":{"youtubeId":"ulZr-S0cFOI","url":"https://www.youtube.com/watch?v=ulZr-S0cFOI","start":null,"end":null},"jumps":false},{"id":"katze-kuh","name":"Katze-Kuh","zone":"Mobilität","level":"leicht","muscles":"Wirbelsäule","cue":"Im Vierfüßlerstand den Rücken abwechselnd rund und hohl machen.","video":{"youtubeId":"xyNwxiuERXc","url":"https://www.youtube.com/watch?v=xyNwxiuERXc","start":null,"end":null},"jumps":false},{"id":"kindhaltung","name":"Kindhaltung","zone":"Mobilität","level":"leicht","muscles":"Rücken, Hüfte","cue":"Auf die Fersen setzen, Arme lang nach vorn, ausatmen.","video":{"youtubeId":"4wjV4HdJG8Y","url":"https://www.youtube.com/watch?v=4wjV4HdJG8Y","start":null,"end":null},"jumps":false},{"id":"hueftbeuger-dehnung","name":"Hüftbeuger-Dehnung kniend","zone":"Mobilität","level":"leicht","muscles":"Hüftbeuger","cue":"Im Halbkniestand die Hüfte nach vorn schieben, Po anspannen.","video":{"youtubeId":"K5EZ8ztNEcw","url":"https://www.youtube.com/watch?v=K5EZ8ztNEcw","start":null,"end":null},"jumps":false},{"id":"liegende-drehung","name":"Liegende Drehung","zone":"Mobilität","level":"leicht","muscles":"Rücken, Hüfte","cue":"In Rückenlage die Knie zur Seite sinken lassen, Schultern bleiben unten.","video":{"youtubeId":"1CorCS9-izg","url":"https://www.youtube.com/watch?v=1CorCS9-izg","start":null,"end":null},"jumps":false},{"id":"brezel","name":"Brezel-Dehnung","zone":"Mobilität","level":"mittel","muscles":"Hüfte, Brustwirbelsäule, Oberschenkel","cue":"In Seitlage oberes Knie vorn, hinteren Fuß greifen, Oberkörper aufdrehen.","video":{"youtubeId":"JQLCTOxxnqU","url":"https://www.youtube.com/watch?v=JQLCTOxxnqU","start":null,"end":null},"jumps":false},{"id":"beinkreisen","name":"Beinkreisen im Liegen","zone":"Mobilität","level":"leicht","muscles":"Hüfte, Bauch","cue":"In Rückenlage ein gestrecktes Bein in kleinen Kreisen führen.","video":{"youtubeId":"P2Wn_Zjs_jo","url":"https://www.youtube.com/watch?v=P2Wn_Zjs_jo","start":null,"end":null},"jumps":false}];
+const WORKOUTS = [{"id":"einsteiger","name":"Einsteiger Ganzkörper","desc":"Sanfter Start für den ganzen Körper.","rounds":2,"rest":20,"roundRest":60,"items":[{"ex":"knieheben-marsch","time":40},{"ex":"kniebeuge","reps":12},{"ex":"knie-liegestuetz","reps":10},{"ex":"glute-bridge","reps":15},{"ex":"plank","time":30},{"ex":"bird-dog","reps":10},{"ex":"ausfallschritt-rueck","reps":10},{"ex":"dead-bug","reps":10}]},{"id":"rumpf","name":"Starker Rumpf","desc":"40 Sekunden Arbeit, 20 Sekunden Pause.","rounds":2,"rest":20,"roundRest":45,"items":[{"ex":"dead-bug","time":40},{"ex":"fahrrad-crunch","time":40},{"ex":"plank","time":40},{"ex":"plank-hip-dips","time":40},{"ex":"beinheben","time":40},{"ex":"russian-twist","time":40},{"ex":"seitstuetz","time":40},{"ex":"hollow-hold","time":30}]},{"id":"beine-po","name":"Beine und Po","desc":"Kraft für Oberschenkel und Po, ganz ohne Sprünge.","rounds":3,"rest":20,"roundRest":60,"items":[{"ex":"kniebeuge","reps":15},{"ex":"sumo-kniebeuge","reps":15},{"ex":"ausfallschritt-rueck","reps":12},{"ex":"glute-bridge","reps":15},{"ex":"wandsitzen","time":45},{"ex":"fire-hydrant","reps":12},{"ex":"clamshell","reps":15},{"ex":"einbein-bridge","reps":10}]},{"id":"oberkoerper","name":"Oberkörper Kraft","desc":"Brust, Schultern, Arme und Rücken.","rounds":3,"rest":30,"roundRest":60,"items":[{"ex":"liegestuetz","reps":10},{"ex":"stuhl-dips","reps":12},{"ex":"superman","reps":12},{"ex":"schultertippen","reps":20},{"ex":"pike-liegestuetz","reps":8},{"ex":"schneeengel","reps":10}]},{"id":"ausdauer","name":"Ausdauer ohne Sprung","desc":"Bringt den Puls hoch, schont die Sehnen.","rounds":3,"rest":20,"roundRest":60,"items":[{"ex":"step-jacks","time":40},{"ex":"knieheben-marsch","time":40},{"ex":"burpee-ohne-sprung","time":40},{"ex":"schattenboxen","time":40},{"ex":"mountain-climber-langsam","time":30},{"ex":"kniebeuge","time":40}]},{"id":"mobilitaet","name":"Mobilität am Morgen","desc":"Zehn ruhige Minuten für Hüfte und Rücken.","rounds":1,"rest":5,"roundRest":0,"items":[{"ex":"katze-kuh","time":60},{"ex":"worlds-greatest-stretch","time":60},{"ex":"hueftbeuger-dehnung","time":60},{"ex":"herabschauender-hund","time":45},{"ex":"brezel","time":60},{"ex":"liegende-drehung","time":60},{"ex":"beinkreisen","time":45},{"ex":"kindhaltung","time":60}]}];
+const EX = Object.fromEntries(CATALOG.map(e=>[e.id,e]));
+const ZONES = ["Oberkörper","Rumpf","Beine & Po","Ausdauer ohne Sprung","Mobilität"];
+const CAN_EMBED = !/claude|anthropic/i.test(location.hostname);
+const view = document.getElementById("view");
+const store = { get(k,d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(_){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){} } };
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = s => { s=Math.max(0,Math.round(s)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); };
+
+/* ---------- plans ---------- */
+// Each week lists sessions; scale raises reps and work time, extra adds rounds.
+function mkPlan(id, name, desc, weeks, pattern, prog){
+  const W=[];
+  for(let w=1; w<=weeks; w++){
+    const {scale, extra} = prog(w);
+    W.push({week:w, scale, extra, sessions: pattern(w).map(x=>({workout:x}))});
+  }
+  return {id, name, desc, weeks:W};
+}
+const PLANS = [
+  mkPlan("einsteiger-8","Einsteiger","8 Wochen, 3 Einheiten pro Woche. Langsam aufbauen, Technik lernen.",8,
+    w=> w<=2 ? ["einsteiger","mobilitaet","einsteiger"] : w<=4 ? ["einsteiger","rumpf","beine-po"] : w<=6 ? ["oberkoerper","rumpf","beine-po"] : ["einsteiger","oberkoerper","beine-po"],
+    w=>({scale: 1 + 0.1*Math.floor((w-1)/2), extra: w>=7?1:0})),
+  mkPlan("kraft-8","Kraft","8 Wochen, 4 Einheiten pro Woche. Mehr Wiederholungen und Runden von Woche zu Woche.",8,
+    w=> ["oberkoerper","beine-po","rumpf","mobilitaet"],
+    w=>({scale: 1 + 0.08*(w-1), extra: w>=5?1:0})),
+  mkPlan("ausdauer-6","Fit und Ausdauer","6 Wochen, 4 Einheiten pro Woche. Puls hoch, ganz ohne Sprünge.",6,
+    w=> ["ausdauer","rumpf","ausdauer","beine-po"],
+    w=>({scale: 1 + 0.1*Math.floor((w-1)/2), extra: w>=5?1:0})),
+];
+function scaled(w, scale=1, extra=0){
+  const c = JSON.parse(JSON.stringify(w));
+  c.items.forEach(i=>{ if(i.reps) i.reps=Math.round(i.reps*scale); if(i.time) i.time=Math.round(i.time*scale/5)*5; });
+  c.rounds += extra;
+  return c;
+}
+let planState = store.get("plan", null); // {id, started, done:{"w-s":iso}}
+
+/* ---------- speech + beeps ---------- */
+const settings = store.get("settings",{voice:true,beep:true});
+let deVoice=null;
+function pickVoice(){ const v=(window.speechSynthesis?.getVoices?.()||[]); deVoice = v.find(x=>/^de(-|_)/i.test(x.lang)) || null; }
+if (window.speechSynthesis){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function say(text){
+  if(!settings.voice || !window.speechSynthesis) return;
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang="de-DE"; if(deVoice) u.voice=deVoice; u.rate=1.02; speechSynthesis.speak(u); }catch(_){}
+}
+let actx=null;
+function beep(freq=880, dur=.12){
+  if(!settings.beep) return;
+  try{ actx = actx || new (window.AudioContext||window.webkitAudioContext)(); const o=actx.createOscillator(), g=actx.createGain();
+    o.frequency.value=freq; o.connect(g); g.connect(actx.destination); g.gain.setValueAtTime(.18,actx.currentTime); g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+dur);
+    o.start(); o.stop(actx.currentTime+dur); }catch(_){}
+}
+
+/* ---------- workout timeline ---------- */
+function workoutSeconds(w){
+  let t=0; w.items.forEach(i=>t += (i.time || i.reps*3) + w.rest);
+  return t*w.rounds + w.roundRest*(w.rounds-1);
+}
+function buildSteps(w){
+  const s=[{kind:"ready", dur:10, item:w.items[0], round:1}];
+  for(let r=1;r<=w.rounds;r++){
+    w.items.forEach((it,i)=>{
+      s.push({kind:"work", dur: it.time||null, reps: it.reps||null, item:it, round:r});
+      const lastInRound = i===w.items.length-1, lastAll = lastInRound && r===w.rounds;
+      if(lastAll) return;
+      const rest = lastInRound ? w.roundRest : w.rest;
+      const nextItem = lastInRound ? w.items[0] : w.items[i+1];
+      if(rest>0) s.push({kind:"rest", dur:rest, item:nextItem, round: lastInRound? r+1 : r, roundBreak:lastInRound});
+    });
+  }
+  return s;
+}
+
+/* ---------- views ---------- */
+let exFilter="Alle";
+function renderWorkouts(){
+  view.innerHTML = `<h1>Workouts</h1><p class="muted">Alle Übungen ohne Sprünge. Ton an, Handy hinlegen, los geht's.</p><div class="cards">${
+    WORKOUTS.map(w=>`<div class="card"><h3>${esc(w.name)}</h3><div class="muted">${esc(w.desc)}</div>
+      <div class="facts"><span class="pill">ca. ${Math.round(workoutSeconds(w)/60)} Min</span><span class="pill">${w.items.length} Übungen</span><span class="pill">${w.rounds} ${w.rounds>1?"Runden":"Runde"}</span></div>
+      <div class="muted" style="font-size:.85rem">${w.items.map(i=>esc(EX[i.ex].name)).join(" · ")}</div>
+      <button class="btn primary" data-start="${w.id}" type="button">Starten</button></div>`).join("")
+  }</div>`;
+  view.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>startWorkout(b.dataset.start));
+}
+function renderExercises(){
+  const items = CATALOG.filter(e=>exFilter==="Alle"||e.zone===exFilter);
+  view.innerHTML = `<h1>Übungen</h1><p class="muted">${CATALOG.length} Übungen ohne Sprünge.</p>
+    <div class="chips">${["Alle",...ZONES].map(z=>`<button type="button" class="chip" aria-pressed="${z===exFilter}" data-z="${esc(z)}">${esc(z)}</button>`).join("")}</div>
+    <div class="exlist">${items.map(e=>`<div class="exrow"><div><strong>${esc(e.name)}</strong><span class="lvl">${esc(e.level)}</span>
+      <div class="muted" style="font-size:.85rem">${esc(e.muscles)}</div><div style="font-size:.9rem">${esc(e.cue)}</div></div>
+      <a href="${esc(e.video.url)}" target="_blank" rel="noopener">Video ↗</a></div>`).join("")}</div>`;
+  view.querySelectorAll("[data-z]").forEach(b=>b.onclick=()=>{exFilter=b.dataset.z; renderExercises();});
+}
+
+/* ---------- player ---------- */
+let P=null, wakeLock=null;
+function startWorkout(id, opts={}){
+  const base = WORKOUTS.find(x=>x.id===id); if(!base) return;
+  const w = scaled(base, opts.scale||1, opts.extra||0);
+  beep(1,.001); // unlock audio on this tap
+  P = {w, steps:buildSteps(w), i:0, left:0, paused:false, last:0, started:Date.now(), workSecs:0, zones:{}, planKey:opts.planKey||null, timer:null, spoken:{}};
+  try{ navigator.wakeLock?.request("screen").then(l=>wakeLock=l).catch(()=>{}); }catch(_){}
+  document.getElementById("tabs").hidden = true;
+  enterStep(0);
+  P.timer = setInterval(tick, 200);
+}
+function stepVideo(ex){
+  const v=ex.video;
+  if(!CAN_EMBED) return `<div class="fallback"><span>Video in dieser Vorschau nicht einbettbar.</span><a href="${esc(v.url)}" target="_blank" rel="noopener">Auf YouTube ansehen ↗</a></div>`;
+  const q=new URLSearchParams({autoplay:"1",mute:"1",controls:"0",playsinline:"1",rel:"0",loop:"1",playlist:v.youtubeId,modestbranding:"1"});
+  if(v.start!=null) q.set("start",v.start); if(v.end!=null) q.set("end",v.end);
+  return `<iframe src="https://www.youtube-nocookie.com/embed/${esc(v.youtubeId)}?${q}" allow="autoplay; encrypted-media" title="${esc(ex.name)}"></iframe>`;
+}
+function enterStep(i){
+  P.i=i; const s=P.steps[i]; P.left = s.dur||0; P.last=performance.now(); P.spoken={};
+  const ex=EX[s.item.ex];
+  const label = s.kind==="ready" ? "Gleich geht's los" : s.kind==="rest" ? (s.roundBreak?"Rundenpause":"Pause") : (s.reps? s.reps+" Wiederholungen" : "Übung");
+  const workIdx = P.steps.slice(0,i+1).filter(x=>x.kind==="work").length, workTotal=P.steps.filter(x=>x.kind==="work").length;
+  const nxt = P.steps.slice(i+1).find(x=>x.kind==="work");
+  view.innerHTML = `<div class="player ${s.kind!=="work"?"is-rest":""}">
+    <div class="phead"><span>Runde ${s.round} von ${P.w.rounds} · Übung ${Math.max(1,workIdx)} von ${workTotal}</span><button class="btn" type="button" id="quit">Beenden</button></div>
+    <div><div class="phase">${esc(label)}</div><div class="pname">${s.kind==="work"?"":"Als Nächstes: "}${esc(ex.name)}</div></div>
+    <div class="media">${stepVideo(ex)}</div>
+    <div class="cue">${esc(ex.cue)}</div>
+    <div class="ringwrap"><div class="ring"><svg viewBox="0 0 120 120"><circle class="bgc" cx="60" cy="60" r="52"/><circle class="fgc" id="arc" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="0"/></svg>
+      <div class="num"><span id="num">${s.reps?"×"+s.reps:fmt(P.left)}</span><small>${s.reps?"in deinem Tempo":"verbleibend"}</small></div></div></div>
+    ${s.kind==="work" && nxt ? `<div class="next">Danach: ${esc(EX[nxt.item.ex].name)}</div>`:""}
+    <div class="pctl">
+      <button class="btn" type="button" id="back">Zurück</button>
+      ${s.reps && s.kind==="work" ? `<button class="btn primary big" type="button" id="done">Fertig</button>` : `<button class="btn primary big" type="button" id="pause">${P.paused?"Weiter":"Pause"}</button>`}
+      <button class="btn" type="button" id="skip">Überspringen</button>
+    </div>
+    <div class="sound"><label><input type="checkbox" id="voice" ${settings.voice?"checked":""}> Ansage</label><label><input type="checkbox" id="beepc" ${settings.beep?"checked":""}> Signalton</label></div>
+  </div>`;
+  document.getElementById("quit").onclick=()=>finish(false);
+  document.getElementById("back").onclick=()=>enterStep(Math.max(0,P.i-1));
+  document.getElementById("skip").onclick=()=>next();
+  const d=document.getElementById("done"); if(d) d.onclick=()=>next();
+  const p=document.getElementById("pause"); if(p) p.onclick=()=>{P.paused=!P.paused; p.textContent=P.paused?"Weiter":"Pause"; P.last=performance.now(); say(P.paused?"Pause":"Weiter");};
+  document.getElementById("voice").onchange=e=>{settings.voice=e.target.checked; store.set("settings",settings);};
+  document.getElementById("beepc").onchange=e=>{settings.beep=e.target.checked; store.set("settings",settings);};
+  // announcements
+  if(s.kind==="ready") say("Mach dich bereit. Als Erstes: "+ex.name);
+  else if(s.kind==="rest") say((s.roundBreak?"Rundenpause. ":"Pause. ")+"Als Nächstes: "+ex.name);
+  else { beep(1046,.25); say(s.reps ? ex.name+". "+s.reps+" Wiederholungen. Tippe auf Fertig, wenn du durch bist." : ex.name+". Los!"); }
+  P.stepStart = performance.now();
+}
+function tick(){
+  if(!P) return;
+  const now=performance.now(), s=P.steps[P.i];
+  if(P.paused){ P.last=now; return; }
+  const dt=(now-P.last)/1000; P.last=now;
+  if(s.kind==="work"){ P.workSecs+=dt; const z=EX[s.item.ex].zone; P.zones[z]=(P.zones[z]||0)+dt; }
+  if(!s.dur) return; // reps step waits for "Fertig"
+  P.left-=dt;
+  const sec=Math.ceil(P.left);
+  const num=document.getElementById("num"), arc=document.getElementById("arc");
+  if(num) num.textContent=fmt(Math.max(0,P.left));
+  if(arc) arc.setAttribute("stroke-dashoffset", String(326.7*(1-Math.max(0,P.left)/s.dur)));
+  if(s.dur>=20 && sec===10 && !P.spoken[10]){ P.spoken[10]=1; say("Noch 10 Sekunden"); }
+  if(s.kind==="work" && s.dur>=40 && sec===Math.round(s.dur/2) && !P.spoken.half){ P.spoken.half=1; say("Halbzeit"); }
+  if(sec<=3 && sec>=1 && !P.spoken["b"+sec]){ P.spoken["b"+sec]=1; beep(660,.1); }
+  if(P.left<=0) next();
+}
+function next(){ if(P.i+1>=P.steps.length) finish(true); else enterStep(P.i+1); }
+function finish(complete){
+  clearInterval(P.timer); try{ wakeLock?.release(); }catch(_){} wakeLock=null;
+  const total=(Date.now()-P.started)/1000;
+  const log=store.get("history",[]);
+  const zones=Object.fromEntries(Object.entries(P.zones).map(([k,v])=>[k,Math.round(v)]));
+  log.push({workout:P.w.id, date:new Date().toISOString(), seconds:Math.round(total), workSeconds:Math.round(P.workSecs), zones, plan:P.planKey, complete});
+  store.set("history",log);
+  if(complete && P.planKey && planState){ planState.done[P.planKey]=new Date().toISOString(); store.set("plan",planState); }
+  if(complete){ beep(1318,.4); say("Geschafft! Starke Leistung."); } else if(window.speechSynthesis) speechSynthesis.cancel();
+  const w=P.w; P=null;
+  document.getElementById("tabs").hidden=false;
+  view.innerHTML=`<div class="finish"><h1>${complete?"Geschafft!":"Workout beendet"}</h1><div class="muted">${esc(w.name)}</div>
+    <div class="stat">${fmt(total)}</div><div class="muted">Gesamtzeit</div>
+    <button class="btn primary big" type="button" id="home">Zu den Workouts</button></div>`;
+  const back = planState && complete && log[log.length-1].plan ? "#plan" : "#workouts";
+  const hb=document.getElementById("home"); if(back==="#plan") hb.textContent="Zum Plan";
+  hb.onclick=()=>{ location.hash=back; route(); };
+}
+
+/* ---------- plan view ---------- */
+function currentWeek(plan){
+  // first week that still has an open session
+  for(const wk of plan.weeks){ if(wk.sessions.some((_,i)=>!planState.done[wk.week+"-"+i])) return wk.week; }
+  return null;
+}
+function renderPlan(){
+  if(!planState || !PLANS.find(p=>p.id===planState.id)){
+    view.innerHTML = `<h1>Trainingsplan</h1><p class="muted">Wähle einen Plan. Die Einheiten werden jede Woche etwas länger und schwerer.</p><div class="cards">${
+      PLANS.map(p=>`<div class="card"><h3>${esc(p.name)}</h3><div class="muted">${esc(p.desc)}</div>
+        <div class="facts"><span class="pill">${p.weeks.length} Wochen</span><span class="pill">${p.weeks[0].sessions.length}× pro Woche</span></div>
+        <button class="btn primary" type="button" data-plan="${p.id}">Plan starten</button></div>`).join("")}</div>`;
+    view.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{
+      planState={id:b.dataset.plan, started:new Date().toISOString(), done:{}}; store.set("plan",planState); renderPlan(); window.scrollTo(0,0);
+    });
+    return;
+  }
+  const plan=PLANS.find(p=>p.id===planState.id);
+  const cur=currentWeek(plan);
+  const total=plan.weeks.reduce((a,w)=>a+w.sessions.length,0), done=Object.keys(planState.done).length;
+  view.innerHTML = `<h1>${esc(plan.name)}</h1><p class="muted">${cur?`Woche ${cur} von ${plan.weeks.length}`:"Plan abgeschlossen"} · ${done} von ${total} Einheiten erledigt</p>
+    <div class="weeks">${plan.weeks.map(wk=>{
+      const d=wk.sessions.filter((_,i)=>planState.done[wk.week+"-"+i]).length;
+      return `<details class="week ${wk.week===cur?"current":""}" ${wk.week===cur?"open":""}><summary><span>Woche ${wk.week}${wk.extra?" · +"+wk.extra+" Runde":""}${wk.scale>1?" · Intensität "+Math.round(wk.scale*100)+" %":""}</span><span class="wk-prog">${d}/${wk.sessions.length}</span></summary>
+        ${wk.sessions.map((s,i)=>{ const key=wk.week+"-"+i, isDone=!!planState.done[key], w=WORKOUTS.find(x=>x.id===s.workout), sw=scaled(w,wk.scale,wk.extra);
+          return `<div class="sess ${isDone?"done":""}"><div class="left"><span class="tick">${isDone?"✓":""}</span><div><div class="sname">${esc(w.name)}</div><div class="muted" style="font-size:.8rem">ca. ${Math.round(workoutSeconds(sw)/60)} Min · ${sw.rounds} ${sw.rounds>1?"Runden":"Runde"}</div></div></div>
+            <button class="btn ${isDone?"":"primary"}" type="button" data-run="${key}">${isDone?"Wiederholen":"Starten"}</button></div>`;}).join("")}
+      </details>`;}).join("")}</div>
+    <p style="margin-top:20px"><button class="btn" type="button" id="leave">Anderen Plan wählen</button></p>`;
+  view.querySelectorAll("[data-run]").forEach(b=>b.onclick=()=>{
+    const [w,i]=b.dataset.run.split("-").map(Number), wk=plan.weeks[w-1];
+    startWorkout(wk.sessions[i].workout,{scale:wk.scale, extra:wk.extra, planKey:b.dataset.run});
+  });
+  const lv=document.getElementById("leave");
+  lv.onclick=()=>{ if(lv.dataset.sure){ planState=null; store.set("plan",null); renderPlan(); window.scrollTo(0,0); } else { lv.dataset.sure="1"; lv.textContent="Sicher? Dein Fortschritt im Plan geht verloren. Nochmal tippen."; } };
+}
+
+/* ---------- stats view ---------- */
+function weekStart(d){ const x=new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return x; }
+function renderStats(){
+  const log=store.get("history",[]).filter(h=>h.complete);
+  if(!log.length){ view.innerHTML=`<h1>Fortschritt</h1><p class="empty">Noch keine Einheit abgeschlossen. Nach deinem ersten Workout siehst du hier deine Serie, deine Trainingszeit pro Woche und welche Körperzonen du trainiert hast.</p>`; return; }
+  const totalMin=Math.round(log.reduce((a,h)=>a+h.seconds,0)/60);
+  // streak in weeks with at least one workout, counting back from this week
+  const wkKeys=new Set(log.map(h=>weekStart(h.date).getTime()));
+  let streak=0, ws=weekStart(new Date());
+  if(!wkKeys.has(ws.getTime())) ws.setDate(ws.getDate()-7);
+  while(wkKeys.has(ws.getTime())){ streak++; ws.setDate(ws.getDate()-7); }
+  const thisWeek=weekStart(new Date()).getTime();
+  const weeks=[]; for(let k=7;k>=0;k--){ const s=new Date(thisWeek); s.setDate(s.getDate()-7*k); const e=new Date(s); e.setDate(e.getDate()+7);
+    weeks.push({s, min:Math.round(log.filter(h=>{const t=new Date(h.date); return t>=s && t<e;}).reduce((a,h)=>a+h.seconds,0)/60)}); }
+  const maxMin=Math.max(10,...weeks.map(w=>w.min));
+  const zones={}; log.forEach(h=>Object.entries(h.zones||{}).forEach(([z,v])=>zones[z]=(zones[z]||0)+v));
+  const zmax=Math.max(1,...Object.values(zones));
+  const longest=Math.max(...log.map(h=>h.seconds));
+  const name=id=>(WORKOUTS.find(w=>w.id===id)||{name:id}).name;
+  view.innerHTML=`<h1>Fortschritt</h1>
+    <div class="kpis">
+      <div class="kpi"><b>${streak}</b><span>${streak===1?"Woche":"Wochen"} in Folge</span></div>
+      <div class="kpi"><b>${log.length}</b><span>Workouts gesamt</span></div>
+      <div class="kpi"><b>${totalMin}</b><span>Minuten gesamt</span></div>
+      <div class="kpi"><b>${fmt(longest)}</b><span>Längstes Workout</span></div>
+    </div>
+    <div class="chart"><strong>Minuten pro Woche</strong>
+      <div class="bars">${weeks.map((w,i)=>`<div class="bar ${i===7?"now":""}"><span>${w.min||""}</span><i style="height:${w.min/maxMin*100}%"></i><span>${i===7?"jetzt":w.s.getDate()+"."+(w.s.getMonth()+1)+"."}</span></div>`).join("")}</div></div>
+    <div class="chart"><strong>Trainierte Körperzonen</strong><div style="margin-top:8px">${ZONES.map(z=>`<div class="zrow"><span>${esc(z)}</span><span class="zt"><i style="width:${(zones[z]||0)/zmax*100}%"></i></span><span>${Math.round((zones[z]||0)/60)} Min</span></div>`).join("")}</div></div>
+    <h2>Letzte Workouts</h2><div class="hist">${log.slice(-10).reverse().map(h=>{const d=new Date(h.date);
+      return `<div><span>${esc(name(h.workout))}</span><span class="muted">${d.toLocaleDateString("de-DE",{weekday:"short",day:"numeric",month:"numeric"})} · ${fmt(h.seconds)}</span></div>`;}).join("")}</div>`;
+}
+
+/* ---------- routing ---------- */
+function route(){
+  if(P) return;
+  const h=location.hash.slice(1);
+  const v = ["uebungen","plan","fortschritt"].includes(h) ? h : "workouts";
+  document.querySelectorAll("#tabs a").forEach(a=>a.setAttribute("aria-current", a.dataset.v===v?"page":"false"));
+  ({uebungen:renderExercises, plan:renderPlan, fortschritt:renderStats, workouts:renderWorkouts})[v]();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{});}</script></body></html>
